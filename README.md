@@ -9,8 +9,7 @@ Repozitorij z gradivi pri predmetu APPR v študijskem letu 2018/19
 
 ## Bruto in neto plače po svetu
 
-Izbrali si boste temo, s katero se bo vaš projekt ukvarjal.
-Tukaj boste napisali, kje ste dobili podatke, ter kakšen je vaš cilj.
+Izbral sem si temo bruto in neto plač po svetu. V svoji nalogi bom raziskal kakšne so povprečne bruto in neto plače po svetu. Posikal bom tudi povprečno žensko in moško plačo v neki državi. Glede na število moških in žensk v neki državi bom posikal povezavo z višino povprečne plače. Plače bom prav tako primerjal geogtrafsko in jih povezal z BDP-jem te države. Prav tako se mi zdi zanimiva primerjava plače in kriminala, kjer predvsem mislim na število ropov. Ikal pa bom tudi povezave s starostjo in izobrazbo prebivalstva. 
 
 ## Program
 
