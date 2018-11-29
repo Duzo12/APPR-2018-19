@@ -2,15 +2,16 @@
 
 # Nejc Duscak
 
+
 Repozitorij z gradivi pri predmetu APPR v študijskem letu 2018/19
 
 * [![Shiny](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/jaanos/APPR-2018-19/master?urlpath=shiny/APPR-2018-19/projekt.Rmd) Shiny
 * [![RStudio](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/jaanos/APPR-2018-19/master?urlpath=rstudio) RStudio
 
-## Tematika
+##  Bruto in neto plača po svetu
 
-Izbrali si boste temo, s katero se bo vaš projekt ukvarjal.
-Tukaj boste napisali, kje ste dobili podatke, ter kakšen je vaš cilj.
+Izbral sem si temo bruto in neto plač po svetu. V svoji nalogi bom raziskal kakšne so povprečne bruto in neto plače po svetu. Poiskal bom tudi povprečno žensko in moško plačo, ter iskal povezave višine plače glede na število moških in žensk v neki državi. Plače bom prav tako razdelil geografsko (tu predvsem mislim glede na kontinetne). Plače bom povezal tudi s BDP-jem posamezne države. Prav tako se mi zdi zanimiva primerjava s kriminalom v neki države, ali višina plače vpliva na število kriminala, kjer mislim prdvsem rope. Iskal pa bom tudi povezave s starostjo prebivalstva in izobrazbo. 
+  
 
 ## Program
 
