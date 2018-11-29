@@ -11,6 +11,14 @@ Repozitorij z gradivi pri predmetu APPR v študijskem letu 2018/19
 
 Izbral sem si temo bruto in neto plač po svetu. V svoji nalogi bom raziskal kakšne so povprečne bruto in neto plače po svetu. Posikal bom tudi povprečno žensko in moško plačo v neki državi. Glede na število moških in žensk v neki državi bom posikal povezavo z višino povprečne plače. Plače bom prav tako primerjal geogtrafsko in jih povezal z BDP-jem te države. Prav tako se mi zdi zanimiva primerjava plače in kriminala, kjer predvsem mislim na število ropov. Ikal pa bom tudi povezave s starostjo in izobrazbo prebivalstva. 
 
+## Podatkovni viri
+
+Viri:
+  - https://www.numbeo.com/cost-of-living/country_price_rankings?itemId=105 
+  - https://www.numbeo.com/cost-of-living/
+  - https://www.numbeo.com/crime/
+  - https://en.wikipedia.org/wiki/List_of_countries_by_median_age
+
 ## Program
 
 Glavni program in poročilo se nahajata v datoteki `projekt.Rmd`.
