@@ -1,6 +1,6 @@
 # Analiza podatkov s programom R, 2018/19
 
-# Nejc Duscak
+# Nejc Duščak
 
 Repozitorij z gradivi pri predmetu APPR v študijskem letu 2018/19
 
@@ -11,6 +11,7 @@ Repozitorij z gradivi pri predmetu APPR v študijskem letu 2018/19
 ## Bruto in neto plače po svetu
 
 Izbral sem si temo bruto in neto plač po svetu. V svoji nalogi bom raziskal kakšne so povprečne bruto in neto plače po svetu. Posikal bom tudi povprečno žensko in moško plačo v neki državi. Glede na število moških in žensk v neki državi bom posikal povezavo z višino povprečne plače. Plače bom prav tako primerjal geografsko in jih povezal z BDP-jem te države. Prav tako se mi zdi zanimiva primerjava plače in kriminala. Na koncu pa bom plače primerjal tudi s starostjo.
+
 ## Podatkovni viri
 
 Viri:
@@ -29,6 +30,7 @@ Viri:
 ## Zasnova podatkovnega dela
 
 Prvo bom poiskal povprečno plačo za posamezno države, znotraj vsake države pa bom navedel povprečno plačo moških in žensk oziroma procentualno razliko med povprečno žensko in moško plačo. Tako bodo v prvem stolpcu moje tabele naštete vse države, nato bo sledila povprečna plača in kasneje še razlika med plačama obeh spolov. Prav tako bom poiskal podatke o BDP-ju, kriminalu in starosti prebivalstva, ter jih vključil v tabelo. Na koncu bom poiskal stroške življenja v posamezni državi, kjer bom stroške razdelil na več podskupin in jih tako primerjal s povprečno plačo. 
+
 
 ## Program
 
