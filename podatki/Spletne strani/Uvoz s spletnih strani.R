@@ -15,5 +15,6 @@ tabelaBDP <- stran %>% html_nodes(xpath = "//table[@class='wikitable sortable']"
 
 link <- "https://www.worldatlas.com/articles/murder-rates-by-country.html"
 stran <- html_session(link) %>% read_html()
-tabelaUmorov <- stran %>% html_nodes(xpath = "//h2[@class='tableToggle-h2']") %>%
+tabelaUmorov <- stran %>% html_nodes(xpath = "//table") %>%
   .[[1]] %>% html_table(dec= ",")
+
