@@ -1,6 +1,6 @@
 # Analiza podatkov s programom R, 2018/19
 
-# Nejc Duscak
+# Nejc Duščak
 
 
 Repozitorij z gradivi pri predmetu APPR v študijskem letu 2018/19
@@ -8,11 +8,28 @@ Repozitorij z gradivi pri predmetu APPR v študijskem letu 2018/19
 * [![Shiny](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/Duzo12/APPR-2018-19/master?urlpath=shiny/APPR-2018-19/projekt.Rmd) Shiny
 * [![RStudio](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/Duzo12/APPR-2018-19/master?urlpath=rstudio) RStudio
 
-<<<<<<< HEAD
 ## Bruto in neto plače po svetu
 
-Izbral sem si temo bruto in neto plač po svetu. V svoji nalogi bom raziskal kakšne so povprečne bruto in neto plače po svetu. Posikal bom tudi povprečno žensko in moško plačo v neki državi. Glede na število moških in žensk v neki državi bom posikal povezavo z višino povprečne plače. Plače bom prav tako primerjal geogtrafsko in jih povezal z BDP-jem te države. Prav tako se mi zdi zanimiva primerjava plače in kriminala, kjer predvsem mislim na število ropov. Ikal pa bom tudi povezave s starostjo in izobrazbo prebivalstva. 
->>>>>>> e217cd896cf8e35f5b8ee9a9c6e4cd003fe2fa96
+Izbral sem si temo bruto in neto plač po svetu. V svoji nalogi bom raziskal kakšne so povprečne bruto in neto plače po svetu. Posikal bom tudi povprečno žensko in moško plačo v neki državi. Glede na število moških in žensk v neki državi bom posikal povezavo z višino povprečne plače. Plače bom prav tako primerjal geografsko in jih povezal z BDP-jem te države. Prav tako se mi zdi zanimiva primerjava plače in kriminala. Na koncu pa bom plače primerjal tudi s starostjo.
+
+## Podatkovni viri
+
+Viri:
+  - podatki o povprečni mesečni plači:
+      https://www.numbeo.com/cost-of-living/prices_by_country.jsp?displayCurrency=USD&itemId=105
+  - podatki o življenjskih stroških:
+      https://www.numbeo.com/cost-of-living/
+  - podatki o številu kriminala:
+      https://www.numbeo.com/crime/rankings_by_country.jsp
+      https://www.worldatlas.com/articles/murder-rates-by-country.html
+  - podatki o povprečni starosti:
+      https://en.wikipedia.org/wiki/List_of_countries_by_median_age
+  - podatki o BDP-ju:
+      https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)_per_capita
+      
+## Zasnova podatkovnega dela
+
+Prvo bom poiskal povprečno plačo za posamezno države, znotraj vsake države pa bom navedel povprečno plačo moških in žensk oziroma procentualno razliko med povprečno žensko in moško plačo. Tako bodo v prvem stolpcu moje tabele naštete vse države, nato bo sledila povprečna plača in kasneje še razlika med plačama obeh spolov. Prav tako bom poiskal podatke o BDP-ju, kriminalu in starosti prebivalstva, ter jih vključil v tabelo. Na koncu bom poiskal stroške življenja v posamezni državi, kjer bom stroške razdelil na več podskupin in jih tako primerjal s povprečno plačo. 
 
 ## Program
 
