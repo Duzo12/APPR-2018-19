@@ -5,13 +5,14 @@
 
 Repozitorij z gradivi pri predmetu APPR v študijskem letu 2018/19
 
-* [![Shiny](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/jaanos/APPR-2018-19/master?urlpath=shiny/APPR-2018-19/projekt.Rmd) Shiny
-* [![RStudio](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/jaanos/APPR-2018-19/master?urlpath=rstudio) RStudio
+* [![Shiny](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/Duzo12/APPR-2018-19/master?urlpath=shiny/APPR-2018-19/projekt.Rmd) Shiny
+* [![RStudio](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/Duzo12/APPR-2018-19/master?urlpath=rstudio) RStudio
 
-##  Bruto in neto plača po svetu
+<<<<<<< HEAD
+## Bruto in neto plače po svetu
 
-Izbral sem si temo bruto in neto plač po svetu. V svoji nalogi bom raziskal kakšne so povprečne bruto in neto plače po svetu. Poiskal bom tudi povprečno žensko in moško plačo, ter iskal povezave višine plače glede na število moških in žensk v neki državi. Plače bom prav tako razdelil geografsko (tu predvsem mislim glede na kontinetne). Plače bom povezal tudi s BDP-jem posamezne države. Prav tako se mi zdi zanimiva primerjava s kriminalom v neki države, ali višina plače vpliva na število kriminala, kjer mislim prdvsem rope. Iskal pa bom tudi povezave s starostjo prebivalstva in izobrazbo. 
-  
+Izbral sem si temo bruto in neto plač po svetu. V svoji nalogi bom raziskal kakšne so povprečne bruto in neto plače po svetu. Posikal bom tudi povprečno žensko in moško plačo v neki državi. Glede na število moških in žensk v neki državi bom posikal povezavo z višino povprečne plače. Plače bom prav tako primerjal geogtrafsko in jih povezal z BDP-jem te države. Prav tako se mi zdi zanimiva primerjava plače in kriminala, kjer predvsem mislim na število ropov. Ikal pa bom tudi povezave s starostjo in izobrazbo prebivalstva. 
+>>>>>>> e217cd896cf8e35f5b8ee9a9c6e4cd003fe2fa96
 
 ## Program
 
