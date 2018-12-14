@@ -22,5 +22,8 @@ tabelaUmorov <- stran %>% html_nodes(xpath = "//table") %>%
 #Poskus s spletne csv
 link <- "https://www.numbeo.com/cost-of-living/country_price_rankings?displayCurrency=USD&itemId=105"
 stran <- html_session(link) %>% read_html() %>% as.character()
-stran1 <- gsub("^\\([\n(.*)]\\);$", "\\1", stran)
-
+stran1 <- gsub("^.*\\(\\[(.*) \\]\\).*$", "\\1", stran)
+stran1 <- strsplit(stran1, split="   ")[[1]]
+drzave <- gsub("^.*'(.*)'.*$", "\\1",stran1)
+cifre=gsub("^.*, (.*)\\].*$", "\\1",stran1)
+tabelaPlace = data.frame(rzave=drzave,vrednost=as.numeric(cifre))[seq(3,length(cifre)-2,2),]
