@@ -26,4 +26,13 @@ stran1 <- gsub("^.*\\(\\[(.*) \\]\\).*$", "\\1", stran)
 stran1 <- strsplit(stran1, split="   ")[[1]]
 drzave <- gsub("^.*'(.*)'.*$", "\\1",stran1)
 cifre=gsub("^.*, (.*)\\].*$", "\\1",stran1)
-tabelaPlace = data.frame(rzave=drzave,vrednost=as.numeric(cifre))[seq(3,length(cifre)-2,2),]
+tabelaPlace = data.frame(drzave=drzave,vrednost=as.numeric(cifre))[seq(3,length(cifre)-2,2),]
+
+
+link <- "https://www.numbeo.com/crime/rankings_by_country.jsp?title=2017"
+stran <- html_session(link) %>% read_html() %>% as.character()
+stran1 <- gsub("^.*\\(\\[(.*) \\]\\).*$", "\\1", stran)
+stran1 <- strsplit(stran1, split= "   ")[[1]]
+drzave <- gsub("^.*'(.*)'.*$", "\\1", stran1)
+cifre=gsub("^.*, (.*)\\].*$", "\\1",stran1)
+tabelaCrimeindex = data.frame(drzave=drzave,vrednost=as.numeric(cifre))[seq(3,length(cifre)-2,2),]
