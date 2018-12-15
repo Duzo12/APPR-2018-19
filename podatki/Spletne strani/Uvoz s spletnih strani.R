@@ -1,3 +1,6 @@
+require(dplyr)
+require(tidyr)
+require(readr)
 library(rvest)
 library(gsubfn)
 library(readr)
@@ -13,6 +16,8 @@ linkBDP <- "https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)_per_cap
 stranBDP <- html_session(linkBDP) %>% read_html()
 tabelaBDP <- stranBDP %>% html_nodes(xpath = "//table[@class='wikitable sortable']") %>%
   .[[2]] %>% html_table(dec= ",")
+tabelaBDP <- tabelaBDP[ , -1]
+
 
 linkUmorov <- "https://www.worldatlas.com/articles/murder-rates-by-country.html"
 stranUmorov <- html_session(linkUmorov) %>% read_html()
@@ -45,3 +50,8 @@ stran1 <- strsplit(stran1, split="   ")[[1]]
 drzave <- gsub("^.*'(.*)'.*$", "\\1",stran1)
 cifre=gsub("^.*, (.*)\\].*$", "\\1",stran1)
 tabelaCrimeindex = data.frame(Drzave=drzave,vrednost=as.numeric(cifre))[seq(3,length(cifre)-2,2),]
+
+
+#Združene tabele
+zdruzena <- tabelaPlace %>% inner_join(tabelaBDP, c("Drzave"="Country/Territory"))
+
