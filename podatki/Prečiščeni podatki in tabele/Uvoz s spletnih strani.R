@@ -49,7 +49,7 @@ stran1 <- strsplit(stran1, split="   ")[[1]]
 drzave <- gsub("^.*'(.*)'.*$", "\\1",stran1)
 cifre=gsub("^.*, (.*)\\].*$", "\\1",stran1)
 tabelaCostliving = data.frame(Drzave=drzave,vrednost=as.numeric(cifre))[seq(3,length(cifre)-2,2),]
-names(tabelaCostliving) <- c("Država", "Indeks stroška življenja")
+names(tabelaCostliving) <- c("Država", "Indeks življenjskega stroška")
 
 #Tabela, ki združuje vse tabele
 zdruzenaPlaceBDP <- tabelaPlace %>% inner_join(tabelaBDP, "Država"="Država")
