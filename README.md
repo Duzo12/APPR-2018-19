@@ -8,9 +8,9 @@ Repozitorij z gradivi pri predmetu APPR v študijskem letu 2018/19
 * [![Shiny](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/Duzo12/APPR-2018-19/master?urlpath=shiny/APPR-2018-19/projekt.Rmd) Shiny
 * [![RStudio](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/Duzo12/APPR-2018-19/master?urlpath=rstudio) RStudio
 
-## Bruto in neto plače po svetu
+##  Analiza neto plač po svetu
 
-Izbral sem si temo bruto in neto plač po svetu. V svoji nalogi bom raziskal kakšne so povprečne bruto in neto plače po svetu. Posikal bom tudi povprečno žensko in moško plačo v neki državi. Glede na število moških in žensk v neki državi bom posikal povezavo z višino povprečne plače. Plače bom prav tako primerjal geografsko in jih povezal z BDP-jem te države. Prav tako se mi zdi zanimiva primerjava plače in kriminala. Na koncu pa bom plače primerjal tudi s starostjo.
+Izbral sem si temo neto plač po svetu. V svoji nalogi bom analiziral kakšne so povprečne neto plače po svetu ter jih analiziral glede na več spremenljivk. Plače bom prav tako primerjal geografsko in jih povezal z BDP-jem te države. Prav tako se mi zdi zanimiva primerjava plače in kriminala. Na koncu pa bom plače primerjal tudi s starostno strukturo prebivalstva.
 
 ## Podatkovni viri
 

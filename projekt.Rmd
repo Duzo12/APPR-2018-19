@@ -24,40 +24,137 @@ source("lib/libraries.r", encoding="UTF-8")
 source("lib/rstudio.r", encoding="UTF-8")
 ```
 
-# Izbira teme
+##  Analiza neto plač po svetu
 
-Za vzorec bomo prikazali nekaj podatkov o slovenskih občinah.
+Izbral sem si temo neto plač po svetu. V svoji nalogi bom analiziral kakšne so povprečne neto plače po svetu ter jih analiziral glede na več spremenljivk. Plače bom prav tako primerjal geografsko in jih povezal z BDP-jem te države. Prav tako se mi zdi zanimiva primerjava plače in kriminala. Na koncu pa bom plače primerjal tudi s starostno strukturo prebivalstva. 
 
-![](slike/grb.png)
+## Podatkovni viri
 
+Viri:
+  - podatki o povprečni mesečni plači:
+      https://www.numbeo.com/cost-of-living/prices_by_country.jsp?displayCurrency=USD&itemId=105
+  - podatki o življenjskih stroških:
+      https://www.numbeo.com/cost-of-living/
+  - podatki o številu kriminala:
+      https://www.numbeo.com/crime/rankings_by_country.jsp
+      https://www.worldatlas.com/articles/murder-rates-by-country.html
+  - podatki o povprečni starosti:
+      https://en.wikipedia.org/wiki/List_of_countries_by_median_age
+  - podatki o BDP-ju:
+      https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)_per_capita
+      
+## Zasnova podatkovnega dela
+
+Prvo bom poiskal povprečno plačo za posamezno države, znotraj vsake države pa bom navedel povprečno plačo moških in žensk oziroma procentualno razliko med povprečno žensko in moško plačo. Tako bodo v prvem stolpcu moje tabele naštete vse države, nato bo sledila povprečna plača in kasneje še razlika med plačama obeh spolov. Prav tako bom poiskal podatke o BDP-ju, kriminalu in starosti prebivalstva, ter jih vključil v tabelo. Na koncu bom poiskal stroške življenja v posamezni državi, kjer bom stroške razdelil na več podskupin in jih tako primerjal s povprečno plačo. 
 ***
 
 # Obdelava, uvoz in čiščenje podatkov
 
-```{r uvoz, echo=FALSE, message=FALSE}
-source("uvoz/uvoz.r", encoding="UTF-8")
+```{r}
+# Funkcija, ki uvozi plače s strani numbeo
+uvoz.place <- function(tabelaPlace){
+  linkPlace <- "https://www.numbeo.com/cost-of-living/country_price_rankings?displayCurrency=USD&itemId=105"
+  stran <- html_session(linkPlace) %>% read_html() %>% as.character()
+  stran1 <- gsub("^.*\\(\\[(.*) \\]\\).*$", "\\1", stran)
+  stran1 <- strsplit(stran1, split="   ")[[1]]
+  drzave <- gsub("^.*'(.*)'.*$", "\\1",stran1)
+  cifre=gsub("^.*, (.*)\\].*$", "\\1",stran1)
+  tabelaPlace = data.frame(DrŽava=drzave, vrednost=as.numeric(cifre))[seq(3,length(cifre)-2,2),]
+  names(tabelaPlace) <- c("Država", "Višina plače v $")
+  return(tabelaPlace)
+}
+
+# Funkcija, ki uvozi BDP iz wikipedije
+uvoz.BDP <- function(tabelaBDP){
+  linkBDP <- "https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)_per_capita#Distorted_GDP-per-capita_for_tax_havens"
+  stranBDP <- html_session(linkBDP) %>% read_html()
+  tabelaBDP <- stranBDP %>% html_nodes(xpath = "//table[@class='wikitable sortable']") %>%
+    .[[2]] %>% html_table(dec= ",")
+  tabelaBDP <- tabelaBDP[ , -1]
+  names(tabelaBDP) <- c("Država", "Vrednost BDP v $")
+  return(tabelaBDP)
+}
+
+# Funkcija, ki uvozi povprečno starost iz wikipedije
+uvoz.starost <- function(tabelaStarosti){
+  linkStarosti <- "https://en.wikipedia.org/wiki/List_of_countries_by_median_age"
+  stranStarosti <- html_session(linkStarosti) %>% read_html()
+  tabelaStarosti <- stranStarosti %>% html_nodes(xpath = "//table[@class='wikitable sortable']") %>%
+    .[[1]] %>% html_table(dec= ",")
+  tabelaStarosti <- tabelaStarosti[ , -2]
+  names(tabelaStarosti) <- c("Država", "Povprečje let", "Povprečje moških let", "Povprečje ženskih let")
+  return(tabelaStarosti)
+}
+
+# Funkcija, ki uvozi stopnjo kriminala iz strani numbeo
+uvoz.kriminal <- function(tabelaCrimeindex){
+  linkCrimeindex <- "https://www.numbeo.com/crime/rankings_by_country.jsp?title=2017"
+  stran <- html_session(linkCrimeindex) %>% read_html() %>% as.character()
+  stran1 <- gsub("^.*\\(\\[(.*) \\]\\).*$", "\\1", stran)
+  stran1 <- strsplit(stran1, split= "   ")[[1]]
+  drzave <- gsub("^.*'(.*)'.*$", "\\1", stran1)
+  cifre=gsub("^.*, (.*)\\].*$", "\\1",stran1)
+  tabelaCrimeindex = data.frame(Država=drzave, Stopnja.kriminala=as.numeric(cifre))[seq(3,length(cifre)-2,2),]
+  names(tabelaCrimeindex) <- c("Država", "Stopnja kriminala")
+  return(tabelaCrimeindex)
+}
+
+# Funkcija, ki uvozi indeks življenjskih stroškov iz strani numbeo
+uvoz.zivljenjski.stroski <- function(tabelaCostliving){
+  linkCostliving <- "https://www.numbeo.com/cost-of-living/rankings_by_country.jsp?title=2017"
+  stran <- html_session(linkCostliving) %>% read_html() %>% as.character()
+  stran1 <- gsub("^.*\\(\\[(.*) \\]\\).*$", "\\1", stran)
+  stran1 <- strsplit(stran1, split="   ")[[1]]
+  drzave <- gsub("^.*'(.*)'.*$", "\\1",stran1)
+  cifre=gsub("^.*, (.*)\\].*$", "\\1",stran1)
+  tabelaCostliving = data.frame(Drzave=drzave,vrednost=as.numeric(cifre))[seq(3,length(cifre)-2,2),]
+  names(tabelaCostliving) <- c("Država", "Življenjski stroški")
+  return(tabelaCostliving)
+}
+
+zdruzenaPlaceBDP <- tabelaPlace %>% inner_join(tabelaBDP, "Država"="Država")
+zdruzenaPlaceBDPCrimeindex <- zdruzenaPlaceBDP %>% inner_join(tabelaCrimeindex, "Država"="Država")
+
+uvoz.placeBDP <- function(zdruzenaPlaceBDP){
+  zdruzenaPlaceBDP <- uvoz.place()  %>% inner_join(uvoz.BDP(), "Država"="Država")
+  return(zdruzenaPlaceBDP)
+}
+
+uvoz.placeBDPkriminal <- function(zdruzenaPlaceBDPCrimeindex){
+  zdruzenaPlaceBDPCrimeindex <- uvoz.placeBDP() %>% inner_join(uvoz.kriminal(), "Država"="Država")
+  return(zdruzenaPlaceBDPCrimeindex)
+}
+
+place <- uvoz.place()
+BDP <- uvoz.BDP()
+kriminal <- uvoz.kriminal()
+starost <- uvoz.starost()
+stroski <- uvoz.zivljenjski.stroski()
+Tabela1 <- uvoz.placeBDPkriminal()
 ```
 
-Uvozili smo podatke o občinah v obliki CSV s statističnega urada ter v obliki HTML
-z Wikipedije. Podatke imamo v dveh razpredelnicah v obliki *tidy data*.
+Uvozil sem nasljednje podatke:
+  - povprečne neto mesečne podatke po svetu (HTML)
+  - stopnjo kriminala po svetu (HTML)
+  - indeks življenjskega stroška (HTML)
+Pri vseh treh HTML datotekah sem naletel na težave pri branju podatkov, saj datoteke niso bile zapisane v navadni obliki, zato sem s pomočjo regularnih izrazov izluščil bistvo, ter nardil tabelo.
+  - BDP per capita (HTML)
+  - povprečna starost prebivalstva po svetu
 
-1. `druzine` - podatki o družinah za vsako občino
-  - `obcina` - spremenljivka: ime občine (neurejen faktor),
-  - `velikost.druzine` - spremenljivka: število otrok v družini (število: 1, 2, 3 ali 4, kjer zadnja vrednost pomeni 4 ali več),
-  - `stevilo.druzin` - meritev: število družin z ustreznim številom otrok v ustrezni občini (število).
+Podatki se nahajajo v dveh tabelah:
+ 1.Prva tabela se imenuje Tabela1 in sestoji iz združenih tabel povprečne mesečne plače, BDP-ja in stopnje kriminala:
+ -'Država': ime države za katero sem poiskal nasljednje podatke
+ -'Višina plače v $': kakšna je povprečna mesečna plača v posamezni državi
+ -'BDP v $': koliko znaša BDP per capita v posamezni državi
+ -'Stopnja kriminala': koliko znaša indeks kriminala v posamezni državi
 
-2. `obcine` - podatki o občinah
-  - `obcina` - spremenljivka: ime občine (neurejen faktor),
-  - `povrsina` - meritev: površina občine v km$^2$ (število),
-  - `prebivalci` - meritev: prebivalstvo občine (število),
-  - `gostota` - meritev: število prebivalcev na km$^2$ (število),
-  - `naselja` - meritev: število naselij v občini (število),
-  - `ustanovitev` - meritev: leto ustanovitve občine (število),
-  - `pokrajina` - meritev: pokrajina, ki ji občina pripada (neurejen faktor),
-  - `regija` - meritev: regija, ki ji občina pripada (neurejen faktor),
-  - `odcepitev` - meritev: podatki o občinah, od katerih se je občina odcepila (besedilo).
+ 2. Druga tabela je tabela, ki predstavlja povprečno starost prebivalstva v posamezni državi:
+ -'Država': ime države za katero sem poiskal nasljednje podatke
+ -'Povprečje let': koliko znaša povprečna starost prebivalstva v neki državi
+ -'Povprečje moških let': koliko znaša povprečna starost moških v neki državi
+ -'Povprečje ženskih let': koliko znaša povprečna starost žensk v neki državi
+ 
 
-**Opomba**: da bi razpredelnica `obcine` res bila v obliki *tidy data*, bi morali odstraniti stolpec `gostota` (saj je izpeljan iz stolpcev `povrsina` in `prebivalci`), podatke o pokrajinah pa bi morali premakniti v drugo razpredelnico, saj nekatere občine pripadajo dvema pokrajinama. Podobno bi morali narediti tudi s stolpcem `odcepitev`.
 
 Spodnji graf prikazuje porazdelitev števila naselij v občinah.
 
