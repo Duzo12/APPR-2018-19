@@ -1,4 +1,6 @@
-# Obdelava, uvoz in čiščenje podatkov.
+# Obdelava, uvoz in čiščenje podatkov
 
-Tukaj bomo imeli program, ki bo obdelal, uvozil in očistil podatke (druga faza
-projekta).
+
+# Funkcija, ki uvozi neto plače iz strani numbeo
+uvozi.place <- function(){
+  link <- "https://www.numbeo.com/cost-of-living/prices_by_country.jsp?displayCurrency=USD&itemId=105"
