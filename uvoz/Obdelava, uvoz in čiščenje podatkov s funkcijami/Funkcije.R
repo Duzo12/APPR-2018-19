@@ -55,7 +55,7 @@ uvoz.zivljenjski.stroski <- function(tabelaCostliving){
   drzave <- gsub("^.*'(.*)'.*$", "\\1",stran1)
   cifre=gsub("^.*, (.*)\\].*$", "\\1",stran1)
   tabelaCostliving = data.frame(Drzave=drzave,vrednost=as.numeric(cifre))[seq(3,length(cifre)-2,2),]
-  names(tabelaCostliving) <- c("Država", "Indeks stroška življenja")
+  names(tabelaCostliving) <- c("Država", "Življenjski stroški")
   return(tabelaCostliving)
 }
 
@@ -63,5 +63,5 @@ place <- uvoz.place()
 BDP <- uvoz.BDP()
 kriminal <- uvoz.kriminal()
 starost <- uvoz.starost()
-stroški <- uvoz.zivljenjski.stroski()
+stroski <- uvoz.zivljenjski.stroski()
 
