@@ -59,8 +59,11 @@ uvoz.zivljenjski.stroski <- function(tabelaCostliving){
   return(tabelaCostliving)
 }
 
+
+
+
 place <- uvoz.place()
-BDP <- uvoz.BDP()
+BDP <- 
 kriminal <- uvoz.kriminal()
 starost <- uvoz.starost()
 stroski <- uvoz.zivljenjski.stroski()
