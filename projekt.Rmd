@@ -51,6 +51,15 @@ Prvo bom poiskal povprečno plačo za posamezno države, znotraj vsake države p
 # Obdelava, uvoz in čiščenje podatkov
 
 ```{r}
+require(dplyr)
+require(tidyr)
+require(readr)
+library(rvest)
+library(gsubfn)
+library(readr)
+library(dplyr)
+library(XML)
+
 # Funkcija, ki uvozi plače s strani numbeo
 uvoz.place <- function(tabelaPlace){
   linkPlace <- "https://www.numbeo.com/cost-of-living/country_price_rankings?displayCurrency=USD&itemId=105"
@@ -112,8 +121,6 @@ uvoz.zivljenjski.stroski <- function(tabelaCostliving){
   return(tabelaCostliving)
 }
 
-zdruzenaPlaceBDP <- tabelaPlace %>% inner_join(tabelaBDP, "Država"="Država")
-zdruzenaPlaceBDPCrimeindex <- zdruzenaPlaceBDP %>% inner_join(tabelaCrimeindex, "Država"="Država")
 
 uvoz.placeBDP <- function(zdruzenaPlaceBDP){
   zdruzenaPlaceBDP <- uvoz.place()  %>% inner_join(uvoz.BDP(), "Država"="Država")
