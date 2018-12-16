@@ -18,7 +18,7 @@ Viri:
   - podatki o povprečni mesečni plači:
       https://www.numbeo.com/cost-of-living/prices_by_country.jsp?displayCurrency=USD&itemId=105
   - podatki o življenjskih stroških:
-      https://www.numbeo.com/cost-of-living/
+      "https://www.numbeo.com/cost-of-living/rankings_by_country.jsp?title=2017"
   - podatki o številu kriminala:
       https://www.numbeo.com/crime/rankings_by_country.jsp
       https://www.worldatlas.com/articles/murder-rates-by-country.html
