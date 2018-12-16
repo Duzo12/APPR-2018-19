@@ -12,7 +12,7 @@ stranStarosti <- html_session(linkStarosti) %>% read_html()
 tabelaStarosti <- stranStarosti %>% html_nodes(xpath = "//table[@class='wikitable sortable']") %>%
   .[[1]] %>% html_table(dec= ",")
 tabelaStarosti <- tabelaStarosti[ , -2]
-names(tabelaStarosti) <- c("Država", "Skupno", "Moški", "Ženske")
+names(tabelaStarosti) <- c("Država", "Povprečje let", "Povprečje moških let", "Povprečje ženskih let")
 
 linkBDP <- "https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)_per_capita#Distorted_GDP-per-capita_for_tax_havens"
 stranBDP <- html_session(linkBDP) %>% read_html()
@@ -51,7 +51,6 @@ cifre=gsub("^.*, (.*)\\].*$", "\\1",stran1)
 tabelaCostliving = data.frame(Drzave=drzave,vrednost=as.numeric(cifre))[seq(3,length(cifre)-2,2),]
 names(tabelaCostliving) <- c("Država", "Indeks stroška življenja")
 
-
-#Združene tabele
-zdruzena <- tabelaPlace %>% inner_join(tabelaBDP, "Država"="Država")
-
+#Tabela, ki združuje vse tabele
+zdruzenaPlaceBDP <- tabelaPlace %>% inner_join(tabelaBDP, "Država"="Država")
+zdruzenaPlaceBDPCrimeindex <- zdruzenaPlaceBDP %>% inner_join(tabelaCrimeindex, "Država"="Država")
