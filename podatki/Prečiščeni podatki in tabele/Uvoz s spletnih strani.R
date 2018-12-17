@@ -6,6 +6,11 @@ library(gsubfn)
 library(readr)
 library(dplyr)
 library(XML)
+library(openxlsx)
+
+tabelaIzobrazba <- read.xlsx("C:/Users/nejc/Desktop/FMF/Program R/ProjektAPPR/Novi projekt/ProjektAPPR/podatki/Izobrazba.xlsx")
+obdrzistolpec <- c("Country", "2017")
+tabelaIzobrazba <- tabelaIzobrazba[ , obdrzistolpec]
 
 linkStarosti <- "https://en.wikipedia.org/wiki/List_of_countries_by_median_age"
 stranStarosti <- html_session(linkStarosti) %>% read_html()
