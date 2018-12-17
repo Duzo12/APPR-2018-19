@@ -15,6 +15,7 @@ runtime: shiny
 # in sledimo navodilom v programu.
 #source("fontconfig.r", encoding="UTF-8")
 
+
 # Uvoz vseh potrebnih knjižnic
 source("lib/libraries.r", encoding="UTF-8")
 ```
@@ -42,6 +43,8 @@ Viri:
       https://en.wikipedia.org/wiki/List_of_countries_by_median_age
   - podatki o BDP-ju:
       https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)_per_capita
+  - podatki o izobrazbi:
+      http://hdr.undp.org/en/data
       
 ## Zasnova podatkovnega dela
 
@@ -66,6 +69,7 @@ uvoz.izobrazba <- function(tabelaIzobrazba){
   tabelaIzobrazba <- read.xlsx("C:/Users/nejc/Desktop/FMF/Program R/ProjektAPPR/Novi projekt/ProjektAPPR/podatki/Izobrazba.xlsx")
   obdrzistolpec <- c("Country", "2017")
   tabelaIzobrazba <- tabelaIzobrazba[ , obdrzistolpec]
+  names(tabelaIzobrazba) <- c("Država", "Indeks izobrazbe")
   return(tabelaIzobrazba)
 }
 
@@ -141,14 +145,12 @@ uvoz.placeBDPkriminal <- function(zdruzenaPlaceBDPCrimeindex){
   return(zdruzenaPlaceBDPCrimeindex)
 }
 
-izobrazba <- uvoz.izobrazba()
-place <- uvoz.place()
-BDP <- uvoz.BDP()
-kriminal <- uvoz.kriminal()
-starost <- uvoz.starost()
-stroski <- uvoz.zivljenjski.stroski()
+
 Tabela1 <- uvoz.placeBDPkriminal()
+starost <- uvoz.starost()
+izobrazba <- uvoz.izobrazba()
 ```
+
 
 Uvozil sem nasljednje podatke:
   - povprečne neto mesečne podatke po svetu (HTML)
@@ -158,7 +160,7 @@ Pri vseh treh HTML datotekah sem naletel na težave pri branju podatkov, saj dat
   - BDP per capita (HTML)
   - povprečna starost prebivalstva po svetu
 
-Podatki se nahajajo v dveh tabelah:
+Podatki se nahajajo v treh tabelah:
  1.Prva tabela se imenuje Tabela1 in sestoji iz združenih tabel povprečne mesečne plače, BDP-ja in stopnje kriminala:
  -'Država': ime države za katero sem poiskal nasljednje podatke
  -'Višina plače v $': kakšna je povprečna mesečna plača v posamezni državi
@@ -170,6 +172,10 @@ Podatki se nahajajo v dveh tabelah:
  -'Povprečje let': koliko znaša povprečna starost prebivalstva v neki državi
  -'Povprečje moških let': koliko znaša povprečna starost moških v neki državi
  -'Povprečje ženskih let': koliko znaša povprečna starost žensk v neki državi
+ 
+ 3. Tretja tabela je tabela, ki predstavlja indeks izobrazbe:
+ -'Država': ime države za katero sem poiskal nasljednje podatke
+ -'Indeks izobrazbe': prikazuje kakšen je indeks posamezne države
  
 
 
