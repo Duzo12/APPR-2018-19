@@ -69,7 +69,7 @@ uvoz.izobrazba <- function(tabelaIzobrazba){
   tabelaIzobrazba <- read.xlsx("C:/Users/nejc/Desktop/FMF/Program R/ProjektAPPR/Novi projekt/ProjektAPPR/podatki/Izobrazba.xlsx")
   obdrzistolpec <- c("Country", "2017")
   tabelaIzobrazba <- tabelaIzobrazba[ , obdrzistolpec]
-  names(tabelaIzobrazba) <- c("Država", "Indeks izobrazbe")
+  names(tabelaIzobrazba) <- c("Država", "Indeks.izobrazbe")
   return(tabelaIzobrazba)
 }
 
@@ -82,7 +82,7 @@ uvoz.place <- function(tabelaPlace){
   drzave <- gsub("^.*'(.*)'.*$", "\\1",stran1)
   cifre=gsub("^.*, (.*)\\].*$", "\\1",stran1)
   tabelaPlace = data.frame(DrŽava=drzave, vrednost=as.numeric(cifre))[seq(3,length(cifre)-2,2),]
-  names(tabelaPlace) <- c("Država", "Višina plače v $")
+  names(tabelaPlace) <- c("Država", "Višina.plače")
   return(tabelaPlace)
 }
 
@@ -93,7 +93,7 @@ uvoz.BDP <- function(tabelaBDP){
   tabelaBDP <- stranBDP %>% html_nodes(xpath = "//table[@class='wikitable sortable']") %>%
     .[[2]] %>% html_table(dec= ",")
   tabelaBDP <- tabelaBDP[ , -1]
-  names(tabelaBDP) <- c("Država", "Vrednost BDP v $")
+  names(tabelaBDP) <- c("Država", "Vrednost.BDP")
   return(tabelaBDP)
 }
 
@@ -104,7 +104,7 @@ uvoz.starost <- function(tabelaStarosti){
   tabelaStarosti <- stranStarosti %>% html_nodes(xpath = "//table[@class='wikitable sortable']") %>%
     .[[1]] %>% html_table(dec= ",")
   tabelaStarosti <- tabelaStarosti[ , -2]
-  names(tabelaStarosti) <- c("Država", "Povprečje let", "Povprečje moških let", "Povprečje ženskih let")
+  names(tabelaStarosti) <- c("Država", "Povprečje.let", "Povprečje.moških.let", "Povprečje.ženskih.let")
   return(tabelaStarosti)
 }
 
@@ -117,7 +117,7 @@ uvoz.kriminal <- function(tabelaCrimeindex){
   drzave <- gsub("^.*'(.*)'.*$", "\\1", stran1)
   cifre=gsub("^.*, (.*)\\].*$", "\\1",stran1)
   tabelaCrimeindex = data.frame(Država=drzave, Stopnja.kriminala=as.numeric(cifre))[seq(3,length(cifre)-2,2),]
-  names(tabelaCrimeindex) <- c("Država", "Stopnja kriminala")
+  names(tabelaCrimeindex) <- c("Država", "Stopnja.kriminala")
   return(tabelaCrimeindex)
 }
 
@@ -130,7 +130,7 @@ uvoz.zivljenjski.stroski <- function(tabelaCostliving){
   drzave <- gsub("^.*'(.*)'.*$", "\\1",stran1)
   cifre=gsub("^.*, (.*)\\].*$", "\\1",stran1)
   tabelaCostliving = data.frame(Drzave=drzave,vrednost=as.numeric(cifre))[seq(3,length(cifre)-2,2),]
-  names(tabelaCostliving) <- c("Država", "Življenjski stroški")
+  names(tabelaCostliving) <- c("Država", "Življenjski.stroški")
   return(tabelaCostliving)
 }
 
@@ -181,10 +181,11 @@ Podatki se nahajajo v treh tabelah:
 
 Spodnji graf prikazuje porazdelitev števila naselij v občinah.
 
-```{r histogram, echo=FALSE, message=FALSE, fig.align='center', fig.cap='Histogram števila naselij v občinah'}
-ggplot(obcine, aes(x=naselja)) + geom_histogram() +
-  ggtitle("Pogostost števila naselij") + xlab("Število naselij") + ylab("Število občin")
+```{r}
+library(ggplot2)
+ggplot(data = tabelaBDP, aes(Država, VrednostBDP)) + geom_bar(stat = "Identity")
 ```
+
 
 ***
 

@@ -11,21 +11,21 @@ library(openxlsx)
 tabelaIzobrazba <- read.xlsx("C:/Users/nejc/Desktop/FMF/Program R/ProjektAPPR/Novi projekt/ProjektAPPR/podatki/Izobrazba.xlsx")
 obdrzistolpec <- c("Country", "2017")
 tabelaIzobrazba <- tabelaIzobrazba[ , obdrzistolpec]
-names(tabelaIzobrazba) <- c("Država", "Indeks izobrazbe")
+names(tabelaIzobrazba) <- c("Država", "Indeks.izobrazbe")
 
 linkStarosti <- "https://en.wikipedia.org/wiki/List_of_countries_by_median_age"
 stranStarosti <- html_session(linkStarosti) %>% read_html()
 tabelaStarosti <- stranStarosti %>% html_nodes(xpath = "//table[@class='wikitable sortable']") %>%
   .[[1]] %>% html_table(dec= ",")
 tabelaStarosti <- tabelaStarosti[ , -2]
-names(tabelaStarosti) <- c("Država", "Povprečje let", "Povprečje moških let", "Povprečje ženskih let")
+names(tabelaStarosti) <- c("Država", "Povprečje.let", "Povprečje.moških.let", "Povprečje.ženskih.let")
 
 linkBDP <- "https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)_per_capita#Distorted_GDP-per-capita_for_tax_havens"
 stranBDP <- html_session(linkBDP) %>% read_html()
 tabelaBDP <- stranBDP %>% html_nodes(xpath = "//table[@class='wikitable sortable']") %>%
   .[[2]] %>% html_table(dec= ",")
 tabelaBDP <- tabelaBDP[ , -1]
-names(tabelaBDP) <- c("Država", "Vrednost BDP v $")
+names(tabelaBDP) <- c("Država", "Vrednost.BDP")
 
 
 linkPlace <- "https://www.numbeo.com/cost-of-living/country_price_rankings?displayCurrency=USD&itemId=105"
@@ -35,7 +35,7 @@ stran1 <- strsplit(stran1, split="   ")[[1]]
 drzave <- gsub("^.*'(.*)'.*$", "\\1",stran1)
 cifre=gsub("^.*, (.*)\\].*$", "\\1",stran1)
 tabelaPlace = data.frame(DrŽava=drzave, vrednost=as.numeric(cifre))[seq(3,length(cifre)-2,2),]
-names(tabelaPlace) <- c("Država", "Višina plače v $")
+names(tabelaPlace) <- c("Država", "Višina.plače")
 
 
 linkCrimeindex <- "https://www.numbeo.com/crime/rankings_by_country.jsp?title=2017"
@@ -45,7 +45,7 @@ stran1 <- strsplit(stran1, split= "   ")[[1]]
 drzave <- gsub("^.*'(.*)'.*$", "\\1", stran1)
 cifre=gsub("^.*, (.*)\\].*$", "\\1",stran1)
 tabelaCrimeindex = data.frame(Država=drzave, Stopnja.kriminala=as.numeric(cifre))[seq(3,length(cifre)-2,2),]
-names(tabelaCrimeindex) <- c("Država", "Stopnja kriminala")
+names(tabelaCrimeindex) <- c("Država", "Stopnja.kriminala")
 
 
 linkCostliving <- "https://www.numbeo.com/cost-of-living/rankings_by_country.jsp?title=2017"
@@ -55,7 +55,7 @@ stran1 <- strsplit(stran1, split="   ")[[1]]
 drzave <- gsub("^.*'(.*)'.*$", "\\1",stran1)
 cifre=gsub("^.*, (.*)\\].*$", "\\1",stran1)
 tabelaCostliving = data.frame(Drzave=drzave,vrednost=as.numeric(cifre))[seq(3,length(cifre)-2,2),]
-names(tabelaCostliving) <- c("Država", "Življenjski stroški")
+names(tabelaCostliving) <- c("Država", "Življenjski.stroški")
 
 #Tabela, ki združuje vse tabele
 zdruzenaPlaceBDP <- tabelaPlace %>% inner_join(tabelaBDP, "Država"="Država")
