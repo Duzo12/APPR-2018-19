@@ -59,6 +59,15 @@ library(gsubfn)
 library(readr)
 library(dplyr)
 library(XML)
+library(openxlsx)
+
+#Funkcija, ki uvozi exel tabelo
+uvoz.izobrazba <- function(tabelaIzobrazba){
+  tabelaIzobrazba <- read.xlsx("C:/Users/nejc/Desktop/FMF/Program R/ProjektAPPR/Novi projekt/ProjektAPPR/podatki/Izobrazba.xlsx")
+  obdrzistolpec <- c("Country", "2017")
+  tabelaIzobrazba <- tabelaIzobrazba[ , obdrzistolpec]
+  return(tabelaIzobrazba)
+}
 
 # Funkcija, ki uvozi plače s strani numbeo
 uvoz.place <- function(tabelaPlace){
@@ -132,6 +141,7 @@ uvoz.placeBDPkriminal <- function(zdruzenaPlaceBDPCrimeindex){
   return(zdruzenaPlaceBDPCrimeindex)
 }
 
+izobrazba <- uvoz.izobrazba()
 place <- uvoz.place()
 BDP <- uvoz.BDP()
 kriminal <- uvoz.kriminal()
