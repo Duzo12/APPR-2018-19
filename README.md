@@ -26,6 +26,8 @@ Viri:
       https://en.wikipedia.org/wiki/List_of_countries_by_median_age
   - podatki o BDP-ju:
       https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)_per_capita
+  - podatki o izobrazbi:
+      http://hdr.undp.org/en/data
       
 ## Zasnova podatkovnega dela
 
