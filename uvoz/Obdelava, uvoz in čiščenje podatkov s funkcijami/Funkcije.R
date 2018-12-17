@@ -1,3 +1,13 @@
+#Funkcija, ki uvozi exel tabelo
+uvoz.izobrazba <- function(tabelaIzobrazba){
+  tabelaIzobrazba <- read.xlsx("C:/Users/nejc/Desktop/FMF/Program R/ProjektAPPR/Novi projekt/ProjektAPPR/podatki/Izobrazba.xlsx")
+  obdrzistolpec <- c("Country", "2017")
+  tabelaIzobrazba <- tabelaIzobrazba[ , obdrzistolpec]
+  return(tabelaIzobrazba)
+}
+
+
+
 # Funkcija, ki uvozi plače s strani numbeo
 uvoz.place <- function(tabelaPlace){
   linkPlace <- "https://www.numbeo.com/cost-of-living/country_price_rankings?displayCurrency=USD&itemId=105"
@@ -61,9 +71,9 @@ uvoz.zivljenjski.stroski <- function(tabelaCostliving){
 
 
 
-
+izobrazba <- uvoz.izobrazba()
 place <- uvoz.place()
-BDP <- 
+BDP <- uvoz.BDP()
 kriminal <- uvoz.kriminal()
 starost <- uvoz.starost()
 stroski <- uvoz.zivljenjski.stroski()
