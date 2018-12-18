@@ -191,6 +191,14 @@ ggplot(data = zdruzenaPlaceBDP, aes(x=Drzava, y=Vrednost.BDP)) +
   coord_flip()
 ```
 
+Iz grafa lahko razberemo vrednost BDP-ja posamezne države. Podoben graf bom
+prav tako naredil za stopnjo kriminala. Iz grafa bom tako iskal povezave med
+posameznimi spremenljivkami v povezavi s plačo. V koncu svoje naloge bom
+združil vse tri tabele, ter poskušal poiskati vplive posameznih spremenljivk na
+višino mesečne plače. Vse podatke bom prav tako poskušal prikazati v grafu. V
+skupni tabeli bom tako imel podatek o višini mesečne plače in podatki, ki jih
+bom povezoval s plačo. To so vrednost BDP-ja, kriminal, izobrazba in starost
+prebivalstva.  
 
 ***
 
