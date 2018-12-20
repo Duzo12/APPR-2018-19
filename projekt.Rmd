@@ -66,7 +66,7 @@ library(openxlsx)
 
 #Funkcija, ki uvozi exel tabelo
 uvoz.izobrazba <- function(tabelaIzobrazba){
-  tabelaIzobrazba <- read.xlsx("C:/Users/nejc/Desktop/FMF/Program R/ProjektAPPR/Novi projekt/ProjektAPPR/podatki/Izobrazba.xlsx")
+  tabelaIzobrazba <- read.xlsx("U:/_Osebno/Projekt APPR/APPR-2018-19/Projekt APPR/podatki/Izobrazba.xlsx")
   obdrzistolpec <- c("Country", "2017")
   tabelaIzobrazba <- tabelaIzobrazba[ , obdrzistolpec]
   names(tabelaIzobrazba) <- c("Drzava", "Indeks.izobrazbe")
@@ -82,7 +82,7 @@ uvoz.place <- function(tabelaPlace){
   drzave <- gsub("^.*'(.*)'.*$", "\\1",stran1)
   cifre=gsub("^.*, (.*)\\].*$", "\\1",stran1)
   tabelaPlace = data.frame(Drzava=drzave, vrednost=as.numeric(cifre))[seq(3,length(cifre)-2,2),]
-  names(tabelaPlace) <- c("Drzava", "Visina.plačce")
+  names(tabelaPlace) <- c("Drzava", "Visina.place")
   tabelaPlace$Drzava = as.character(tabelaPlace$Drzava)
   return(tabelaPlace)
 }

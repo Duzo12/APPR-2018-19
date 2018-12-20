@@ -8,7 +8,7 @@ library(dplyr)
 library(XML)
 library(openxlsx)
 
-tabelaIzobrazba <- read.xlsx("C:/Users/nejc/Desktop/FMF/Program R/ProjektAPPR/Novi projekt/ProjektAPPR/podatki/Izobrazba.xlsx")
+tabelaIzobrazba <- read.xlsx("U:/_Osebno/Projekt APPR/APPR-2018-19/Projekt APPR/podatki/Izobrazba.xlsx")
 obdrzistolpec <- c("Country", "2017")
 tabelaIzobrazba <- tabelaIzobrazba[ , obdrzistolpec]
 names(tabelaIzobrazba) <- c("Drzava", "Indeks.izobrazbe")
