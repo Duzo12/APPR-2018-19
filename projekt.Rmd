@@ -187,7 +187,7 @@ Spodnji graf prikazuje porazdelitev števila naselij v občinah.
 library(ggplot2)
 ggplot(data = zdruzenaPlaceBDP, aes(x=Drzava, y=Vrednost.BDP)) +
   geom_bar(stat = "Identity") +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=5)) +
   coord_flip()
 ```
 
