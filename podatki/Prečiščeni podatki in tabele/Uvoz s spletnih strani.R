@@ -12,6 +12,9 @@ tabelaIzobrazba <- read.xlsx("U:/_Osebno/Projekt APPR/APPR-2018-19/Projekt APPR/
 obdrzistolpec <- c("Country", "2017")
 tabelaIzobrazba <- tabelaIzobrazba[ , obdrzistolpec]
 names(tabelaIzobrazba) <- c("Drzava", "Indeks.izobrazbe")
+tabelaIzobrazba$Indeks.izobrazbe <- as.numeric(as.character(tabelaIzobrazba$Indeks.izobrazbe))
+tabelaIzobrazba$Indeks.izobrazbe <- tabelaIzobrazba$Indeks.izobrazbe * 100
+
 
 linkStarosti <- "https://en.wikipedia.org/wiki/List_of_countries_by_median_age"
 stranStarosti <- html_session(linkStarosti) %>% read_html()
@@ -60,5 +63,8 @@ tabelaCostliving = data.frame(Drzave=drzave,vrednost=as.numeric(cifre))[seq(3,le
 names(tabelaCostliving) <- c("Drzava", "Zivljenjski.stroski")
 
 #Tabela, ki združuje vse tabele
-zdruzenaPlaceBDP <- tabelaPlace %>% inner_join(tabelaBDP, "Drzava"="Drzava")
-zdruzenaPlaceBDPCrimeindex <- zdruzenaPlaceBDP %>% inner_join(tabelaCrimeindex, "Drzava"="Drzava")
+Skupnatabela <- tabelaPlace %>% inner_join(tabelaBDP, "Drzava"="Drzava") %>%
+  inner_join(tabelaStarosti, "Drzava"="Drzava") %>%
+  inner_join(tabelaCrimeindex, "Drzava"="Drzava") %>%
+  inner_join(tabelaCostliving, "Drzava"="Drzava")  
+  
