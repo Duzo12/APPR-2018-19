@@ -48,7 +48,7 @@ Viri:
       
 ## Zasnova podatkovnega dela
 
-Prvo bom poiskal povprečno plačo za posamezno države, znotraj vsake države pa bom navedel povprečno plačo moških in žensk oziroma procentualno razliko med povprečno žensko in moško plačo. Tako bodo v prvem stolpcu moje tabele naštete vse države, nato bo sledila povprečna plača in kasneje še razlika med plačama obeh spolov. Prav tako bom poiskal podatke o BDP-ju, kriminalu in starosti prebivalstva, ter jih vključil v tabelo. Na koncu bom poiskal stroške življenja v posamezni državi, kjer bom stroške razdelil na več podskupin in jih tako primerjal s povprečno plačo. 
+Prvo bom poiskal povprečno plačo za posamezno države. Tako bodo v prvem stolpcu moje tabele naštete vse države, takoj za tem pa bo sledila višina povprečne plače. Prav tako bom poiskal podatke o BDP-ju, kriminalu in starosti prebivalstva, ter jih vključil v tabelo. Na koncu bom poiskal stroške življenja v posamezni državi, kjer bom stroške razdelil na več podskupin in jih tako primerjal s povprečno plačo. 
 ***
 
 # Obdelava, uvoz in čiščenje podatkov
@@ -66,10 +66,13 @@ library(openxlsx)
 
 #Funkcija, ki uvozi exel tabelo
 uvoz.izobrazba <- function(tabelaIzobrazba){
-  tabelaIzobrazba <- read.xlsx("U:/_Osebno/Projekt APPR/APPR-2018-19/Projekt APPR/podatki/Izobrazba.xlsx")
+  tabelaIzobrazba <- read.xlsx("C:/Users/nejc/Desktop/FMF/Program R/ProjektAPPR/Novi projekt/ProjektAPPR/podatki/Izobrazba.xlsx")
   obdrzistolpec <- c("Country", "2017")
   tabelaIzobrazba <- tabelaIzobrazba[ , obdrzistolpec]
   names(tabelaIzobrazba) <- c("Drzava", "Indeks.izobrazbe")
+  tabelaIzobrazba$Indeks.izobrazbe <- as.numeric(as.character(tabelaIzobrazba$Indeks.izobrazbe))
+  tabelaIzobrazba$Indeks.izobrazbe <- tabelaIzobrazba$Indeks.izobrazbe * 100
+  tabelaIzobrazba$Drzava <- gsub("^[[:space:]]*", "", tabelaIzobrazba$Drzava)
   return(tabelaIzobrazba)
 }
 
@@ -104,8 +107,9 @@ uvoz.starost <- function(tabelaStarosti){
   stranStarosti <- html_session(linkStarosti) %>% read_html()
   tabelaStarosti <- stranStarosti %>% html_nodes(xpath = "//table[@class='wikitable sortable']") %>%
     .[[1]] %>% html_table(dec= ",")
-  tabelaStarosti <- tabelaStarosti[ , -2]
-  names(tabelaStarosti) <- c("Drzava", "Povprecje.let", "Povprecje.moskih.let", "Povprecje.zenskih.let")
+  obrdzi <- c("Country/Territory", "Total(Year)")
+  tabelaStarosti <- tabelaStarosti[ , obrdzi]
+  names(tabelaStarosti) <- c("Drzava", "Povprecje.let")
   return(tabelaStarosti)
 }
 
@@ -133,6 +137,7 @@ uvoz.zivljenjski.stroski <- function(tabelaCostliving){
   cifre=gsub("^.*, (.*)\\].*$", "\\1",stran1)
   tabelaCostliving = data.frame(Drzave=drzave,vrednost=as.numeric(cifre))[seq(3,length(cifre)-2,2),]
   names(tabelaCostliving) <- c("Drzava", "Zivljenjski.stroski")
+  tabelaCostliving$Drzava <- as.character(as.factor(tabelaCostliving$Drzava))
   return(tabelaCostliving)
 }
 
@@ -147,10 +152,19 @@ uvoz.placeBDPkriminal <- function(zdruzenaPlaceBDPCrimeindex){
   return(zdruzenaPlaceBDPCrimeindex)
 }
 
+uvoz.skupna <- function(Skupnatabela){
+  Skupnatabela <- uvoz.place() %>% inner_join(uvoz.BDP(), "Drzava"="Drzava") %>%
+  inner_join(uvoz.starost(), "Drzava"="Drzava") %>%
+  inner_join(uvoz.izobrazba(), "Drzava" = "Drzava") %>%
+  inner_join(uvoz.kriminal(), "Drzava"="Drzava") %>%
+  inner_join(uvoz.zivljenjski.stroski(), "Drzava"="Drzava")
+  return(Skupnatabela)
+}
 
 Tabela1 <- uvoz.placeBDPkriminal()
 starost <- uvoz.starost()
 izobrazba <- uvoz.izobrazba()
+SkupnaTabela <- uvoz.skupna()
 ```
 
 
@@ -172,20 +186,18 @@ Podatki se nahajajo v treh tabelah:
  2. Druga tabela je tabela, ki predstavlja povprečno starost prebivalstva v posamezni državi:
  -'Država': ime države za katero sem poiskal nasljednje podatke
  -'Povprečje let': koliko znaša povprečna starost prebivalstva v neki državi
- -'Povprečje moških let': koliko znaša povprečna starost moških v neki državi
- -'Povprečje ženskih let': koliko znaša povprečna starost žensk v neki državi
+
  
  3. Tretja tabela je tabela, ki predstavlja indeks izobrazbe:
  -'Država': ime države za katero sem poiskal nasljednje podatke
  -'Indeks izobrazbe': prikazuje kakšen je indeks posamezne države
+
+ 4. Četrta tabela je tabela, ki združuje vse tabele v eno
  
-
-
-Spodnji graf prikazuje porazdelitev števila naselij v občinah.
 
 ```{r}
 library(ggplot2)
-ggplot(data = zdruzenaPlaceBDP, aes(x=Drzava, y=Vrednost.BDP)) +
+ggplot(data =SkupnaTabela, aes(x=Drzava, y=Vrednost.BDP)) +
   geom_bar(stat = "Identity") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=5)) +
   coord_flip()
