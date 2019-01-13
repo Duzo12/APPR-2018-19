@@ -7,6 +7,7 @@ library(readr)
 library(dplyr)
 library(XML)
 library(openxlsx)
+library(DT)
 
 #"U:/_Osebno/Projekt APPR/APPR-2018-19/Projekt APPR/podatki/Izobrazba.xlsx"
 tabelaIzobrazba <- read.xlsx("C:/Users/nejc/Desktop/FMF/Program R/ProjektAPPR/Novi projekt/ProjektAPPR/podatki/Izobrazba.xlsx")
@@ -25,6 +26,9 @@ tabelaStarosti <- stranStarosti %>% html_nodes(xpath = "//table[@class='wikitabl
 obrdzi <- c("Country/Territory", "Total(Year)")
 tabelaStarosti <- tabelaStarosti[ , obrdzi]
 names(tabelaStarosti) <- c("Drzava", "Povprecje.let")
+datatable(tabelaStarosti$Povprecje.let, options = list(columnDefs = list(list(
+            className = 'dt-right', targets = 230
+          ))))
 
 
 linkBDP <- "https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)_per_capita#Distorted_GDP-per-capita_for_tax_havens"
