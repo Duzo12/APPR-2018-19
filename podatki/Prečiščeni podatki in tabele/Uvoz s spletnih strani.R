@@ -26,9 +26,7 @@ tabelaStarosti <- stranStarosti %>% html_nodes(xpath = "//table[@class='wikitabl
 obrdzi <- c("Country/Territory", "Total(Year)")
 tabelaStarosti <- tabelaStarosti[ , obrdzi]
 names(tabelaStarosti) <- c("Drzava", "Povprecje.let")
-datatable(tabelaStarosti$Povprecje.let, options = list(columnDefs = list(list(
-            className = 'dt-right', targets = 230
-          ))))
+
 
 
 linkBDP <- "https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)_per_capita#Distorted_GDP-per-capita_for_tax_havens"
@@ -72,7 +70,7 @@ names(tabelaCostliving) <- c("Drzava", "Zivljenjski.stroski")
 tabelaCostliving$Drzava <- as.character(as.factor(tabelaCostliving$Drzava))
 
 #Tabela, ki združuje vse tabele
-Skupnatabela <- tabelaPlace %>% inner_join(tabelaBDP, "Drzava"="Drzava") %>%
+SkupnaTabela <- tabelaPlace %>% inner_join(tabelaBDP, "Drzava"="Drzava") %>%
                 inner_join(tabelaStarosti, "Drzava"="Drzava") %>%
                 inner_join(tabelaIzobrazba, "Drzava" = "Drzava") %>%
                 inner_join(tabelaCrimeindex, "Drzava"="Drzava") %>%
