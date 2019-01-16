@@ -52,7 +52,7 @@ Prvo bom poiskal povprečno plačo za posamezno države. Tako bodo v prvem stolp
 
 # Obdelava, uvoz in čiščenje podatkov
 
-```{r,echo=FALSE}
+```{r,echo=FALSE, message=FALSE}
 source("uvoz/uvoz.r", encoding="UTF-8")
 ```
 

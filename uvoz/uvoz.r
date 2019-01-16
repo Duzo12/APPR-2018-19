@@ -10,7 +10,7 @@ uvoz.izobrazba <- function(tabelaIzobrazba){
   names(tabelaIzobrazba) <- c("Drzava", "Indeks.izobrazbe")
   tabelaIzobrazba$Indeks.izobrazbe <- as.numeric(as.character(tabelaIzobrazba$Indeks.izobrazbe))
   tabelaIzobrazba$Indeks.izobrazbe <- tabelaIzobrazba$Indeks.izobrazbe * 100
-  tabelaIzobrazba$Drzava <- gsub("^[[:space:]]*", "", tabelaIzobrazba$Drzava)
+  tabelaIzobrazba$Drzava <- gsub("^[[:space:]\u00a0]*", "", tabelaIzobrazba$Drzava)
   return(tabelaIzobrazba)
 }
 
