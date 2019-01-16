@@ -32,110 +32,114 @@ Izbral sem si temo neto plač po svetu. V svoji nalogi bom analiziral kakšne so
 
 Viri:
   - podatki o povprečni mesečni plači:
-      https://www.numbeo.com/cost-of-living/prices_by_country.jsp?displayCurrency=USD&itemId=105
+      https://www.numbeo.com/cost-of-living/prices_by_country.jsp?displayCurrency=USD&itemId=105   
   - podatki o življenjskih stroških:
-      https://www.numbeo.com/cost-of-living/
+      https://www.numbeo.com/cost-of-living/   
   - podatki o številu kriminala:
-      https://www.numbeo.com/crime/rankings_by_country.jsp
-      https://www.worldatlas.com/articles/murder-rates-by-country.html
+      https://www.numbeo.com/crime/rankings_by_country.jsp   
+      https://www.worldatlas.com/articles/murder-rates-by-country.html   
   - podatki o povprečni starosti:
-      https://en.wikipedia.org/wiki/List_of_countries_by_median_age
+      https://en.wikipedia.org/wiki/List_of_countries_by_median_age   
   - podatki o BDP-ju:
-      https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)_per_capita
+      https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)_per_capita   
   - podatki o izobrazbi:
       http://hdr.undp.org/en/data
       
 ## Zasnova podatkovnega dela
 
-Prvo bom poiskal povprečno plačo za posamezno države. Tako bodo v prvem stolpcu moje tabele naštete vse države, takoj za tem pa bo sledila višina povprečne plače. Prav tako bom poiskal podatke o BDP-ju, kriminalu in starosti prebivalstva, ter jih vključil v tabelo. Na koncu bom poiskal stroške življenja v posamezni državi, kjer bom stroške razdelil na več podskupin in jih tako primerjal s povprečno plačo. 
-***
+Prvo bom poiskal povprečno plačo za posamezno države. Tako bodo v prvem stolpcu moje tabele naštete vse države, takoj za tem pa bo sledila višina povprečne plače. Prav tako bom poiskal podatke o BDP-ju, kriminalu in starosti prebivalstva, ter jih vključil v tabelo. Na koncu bom poiskal stroške življenja v posamezni državi, kjer bom stroške razdelil na več podskupin in jih tako primerjal s povprečno plačo.    
+
 
 # Obdelava, uvoz in čiščenje podatkov
 
-```{r}
-
+```{r,echo=FALSE}
+source("uvoz/uvoz.r", encoding="UTF-8")
 ```
 
 
-Uvozil sem nasljednje podatke:
-  - povprečne neto mesečne podatke po svetu (HTML)
-  - stopnjo kriminala po svetu (HTML)
-  - indeks življenjskega stroška (HTML)
-Pri vseh treh HTML datotekah sem naletel na težave pri branju podatkov, saj datoteke niso bile zapisane v navadni obliki, zato sem s pomočjo regularnih izrazov izluščil bistvo, ter nardil tabelo.
-  - BDP per capita (HTML)
+Uvozil sem nasljednje podatke:   
+  - povprečne neto mesečne podatke po svetu (HTML)   
+  - stopnjo kriminala po svetu (HTML)   
+  - indeks življenjskega stroška (HTML)   
+Pri vseh treh HTML datotekah sem naletel na težave pri branju podatkov, saj datoteke niso bile zapisane v navadni obliki, zato sem s pomočjo regularnih izrazov izluščil bistvo, ter nardil tabelo.   
+  - BDP per capita (HTML)   
   - povprečna starost prebivalstva po svetu
 
-Podatki se nahajajo v treh tabelah:
- 1.Prva tabela se imenuje Tabela1 in sestoji iz združenih tabel povprečne mesečne plače, BDP-ja in stopnje kriminala:
- -'Država': ime države za katero sem poiskal nasljednje podatke
- -'Višina plače v $': kakšna je povprečna mesečna plača v posamezni državi
- -'BDP v $': koliko znaša BDP per capita v posamezni državi
+Podatki se nahajajo v treh tabelah:    
+ 1.Prva tabela se imenuje Tabela1 in sestoji iz združenih tabel povprečne mesečne plače, BDP-ja in stopnje kriminala:   
+ -'Država': ime države za katero sem poiskal nasljednje podatke   
+ -'Višina plače v $': kakšna je povprečna mesečna plača v posamezni državi   
+ -'BDP v $': koliko znaša BDP per capita v posamezni državi   
  -'Stopnja kriminala': koliko znaša indeks kriminala v posamezni državi
 
- 2. Druga tabela je tabela, ki predstavlja povprečno starost prebivalstva v posamezni državi:
- -'Država': ime države za katero sem poiskal nasljednje podatke
+ 2. Druga tabela je tabela, ki predstavlja povprečno starost prebivalstva v posamezni državi:   
+ -'Država': ime države za katero sem poiskal nasljednje podatke   
  -'Povprečje let': koliko znaša povprečna starost prebivalstva v neki državi
 
+ 3. Tretja tabela je tabela, ki združuje vse tabele v eno
  
- 3. Tretja tabela je tabela, ki predstavlja indeks izobrazbe:
- -'Država': ime države za katero sem poiskal nasljednje podatke
- -'Indeks izobrazbe': prikazuje kakšen je indeks posamezne države
-
- 4. Četrta tabela je tabela, ki združuje vse tabele v eno
- 
-
-```{r}
-library(ggplot2)
-ggplot(data =SkupnaTabela, aes(x=Drzava, y=Vrednost.BDP)) +
-  geom_bar(stat = "Identity") +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=5)) +
-  coord_flip()
-```
-
-Iz grafa lahko razberemo vrednost BDP-ja posamezne države. Podoben graf bom
-prav tako naredil za stopnjo kriminala. Iz grafa bom tako iskal povezave med
-posameznimi spremenljivkami v povezavi s plačo. V koncu svoje naloge bom
-združil vse tri tabele, ter poskušal poiskati vplive posameznih spremenljivk na
-višino mesečne plače. Vse podatke bom prav tako poskušal prikazati v grafu. V
-skupni tabeli bom tako imel podatek o višini mesečne plače in podatki, ki jih
-bom povezoval s plačo. To so vrednost BDP-ja, kriminal, izobrazba in starost
-prebivalstva.  
 
 ***
 
 # Analiza in vizualizacija podatkov
 
 ```{r vizualizacija, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
-source("vizualizacija/vizualizacija.r", encoding="UTF-8")
+source("analiza/analiza.r", encoding="UTF-8")
+#source("vizualizacija/vizualizacija.r", encoding="UTF-8")
 ```
 
-Spodnji zemljevid prikazuje povprečno velikost družine za vsako občino.
-
-```{r zemljevid, echo=FALSE, fig.align='center', fig.cap='Zemljevid povprečnega števila otrok v družini'}
-ggplot() + geom_polygon(data=left_join(zemljevid, povprecja, by=c("OB_UIME"="obcina")),
-                        aes(x=long, y=lat, group=group, fill=povprecje)) +
-  ggtitle("Povprečno število otrok v družini") + xlab("") + ylab("") +
-  guides(fill=guide_colorbar(title="Povprečje"))
+Spodnji graf prikazuje vrednost BDP-ja v posamezni državi
+```{r, echo=FALSE}
+ggplot(data =SkupnaTabela, aes(x=reorder(Drzava, -Vrednost.BDP), y=Vrednost.BDP)) +
+  geom_bar(stat = "Identity") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=5)) +
+  coord_flip()
 ```
+
+Spodnji graf prikazuje višino plače v posamezni državi
+```{r, echo=FALSE}
+ggplot(data=SkupnaTabela, aes(x=reorder(Drzava, -Visina.place), y=Visina.place)) + 
+  geom_bar(stat = "Identity") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=5)) +
+  coord_flip()
+```
+
+Sedaj pa bom prikazal povezave med različnimi spremenljivkami v moji nalogi:
+
+i)Višina plače in vrednost BDP
+```{r, echo=FALSE}
+ggplot(SkupnaTabela, aes(x = Visina.place, y = Vrednost.BDP)) +
+  geom_point() +
+  geom_smooth(method = lm)
+```
+
+ii)Višina plače in indeks izobrazbe
+```{r, echo=FALSE}
+ggplot(SkupnaTabela, aes(x = Visina.place, y = Indeks.izobrazbe)) +
+  geom_point() +
+  geom_smooth(method =  lm)
+```
+
+iii)Višina plače in indeks kriminala
+```{r, echo=FALSE}
+ggplot(SkupnaTabela, aes(x = Visina.place, y = Stopnja.kriminala)) +
+  geom_point() +
+  geom_smooth(method =  lm)
+```
+
 
 ***
 
 # Napredna analiza podatkov
 
 ```{r analiza, echo=FALSE, message=FALSE}
-source("analiza/analiza.r", encoding="UTF-8")
+#source("analiza/analiza.r", encoding="UTF-8")
 ```
 
 Spodnji graf prikazuje povezavo med številom naselij in površino občine.
 
 ```{r graf, echo=FALSE, fig.align='center', fig.cap='Povezava med številom naselij in površino občine'}
-ggplot(inner_join(obcine, data.frame(obcina=names(skupine),
-                                     skupina=factor(skupine)), by="obcina")
-, aes(x=povrsina, y=naselja, color=skupina, size=prebivalci/1000)) + geom_point() +
-  ggtitle("Število naselij glede na površino občine") +
-  xlab(expression("Površina (km"^2 * ")")) + ylab("Št. naselij") +
-  guides(color=guide_legend(title="Skupina"),
-         size=guide_legend(title="Prebivalci (* 1000)"))
+
 ```
 
 

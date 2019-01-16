@@ -99,9 +99,8 @@ uvoz.skupna <- function(Skupnatabela){
   return(Skupnatabela)
 }
 
-Tabela1 <- uvoz.placeBDPkriminal()
-starost <- uvoz.starost()
-izobrazba <- uvoz.izobrazba()
+TabelaplaceBDPkriminal <- uvoz.placeBDPkriminal()
+TabelaStarost <- uvoz.starost()
 SkupnaTabela <- uvoz.skupna()
 
 
