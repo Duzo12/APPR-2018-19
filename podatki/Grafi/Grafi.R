@@ -1,5 +1,4 @@
-require(ggplot2)
-require(dplyr)
+source("lib/libraries.r", encoding="UTF-8")
 
 ggplot(data =SkupnaTabela, aes(x=Drzava, y=Vrednost.BDP)) +
   geom_bar(stat = "Identity") +

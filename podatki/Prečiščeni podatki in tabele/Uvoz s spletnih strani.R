@@ -1,15 +1,5 @@
-require(dplyr)
-require(tidyr)
-require(readr)
-library(rvest)
-library(gsubfn)
-library(readr)
-library(dplyr)
-library(XML)
-library(readxl)
-library(DT)
+source("lib/libraries.r", encoding="UTF-8")
 
-#"U:/_Osebno/Projekt APPR/APPR-2018-19/Projekt APPR/podatki/Izobrazba.xlsx"
 tabelaIzobrazba <- read_xlsx("podatki/Izobrazba.xlsx")
 obdrzistolpec <- c("Country", "2017")
 tabelaIzobrazba <- tabelaIzobrazba[ , obdrzistolpec]
