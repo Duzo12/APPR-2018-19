@@ -10,6 +10,7 @@ library(maptools)
 
 
 
+
 #zemljevid <- uvozi.zemljevid("http://baza.fmf.uni-lj.si/OB.zip", "OB",
                              #pot.zemljevida="OB", encoding="Windows-1250")
 #levels(zemljevid$OB_UIME) <- levels(zemljevid$OB_UIME) %>%
@@ -17,6 +18,6 @@ library(maptools)
 #zemljevid$OB_UIME <- factor(zemljevid$OB_UIME, levels=levels(obcine$obcina))
 #zemljevid <- fortify(zemljevid)
 
-# Izračunamo povprečno velikost družine
-povprecja <- druzine %>% group_by(obcina) %>%
-  summarise(povprecje=sum(velikost.druzine * stevilo.druzin) / sum(stevilo.druzin))
+source('lib/uvozi.zemljevid.r')
+zemljevid <- uvozi.zemljevid("https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/110m/cultural/110m_cultural.zip",
+                             "ne_110m_admin_0_countries", encoding="UTF-8") %>% fortify
