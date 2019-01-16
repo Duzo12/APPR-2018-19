@@ -6,11 +6,11 @@ library(gsubfn)
 library(readr)
 library(dplyr)
 library(XML)
-library(openxlsx)
+library(readxl)
 library(DT)
 
 #"U:/_Osebno/Projekt APPR/APPR-2018-19/Projekt APPR/podatki/Izobrazba.xlsx"
-tabelaIzobrazba <- read.xlsx("C:/Users/nejc/Desktop/FMF/Program R/ProjektAPPR/Novi projekt/ProjektAPPR/podatki/Izobrazba.xlsx")
+tabelaIzobrazba <- read_xlsx("podatki/Izobrazba.xlsx")
 obdrzistolpec <- c("Country", "2017")
 tabelaIzobrazba <- tabelaIzobrazba[ , obdrzistolpec]
 names(tabelaIzobrazba) <- c("Drzava", "Indeks.izobrazbe")
@@ -22,7 +22,7 @@ tabelaIzobrazba$Drzava <- gsub("^[[:space:]]*", "", tabelaIzobrazba$Drzava)
 linkStarosti <- "https://en.wikipedia.org/wiki/List_of_countries_by_median_age"
 stranStarosti <- html_session(linkStarosti) %>% read_html()
 tabelaStarosti <- stranStarosti %>% html_nodes(xpath = "//table[@class='wikitable sortable']") %>%
-  .[[1]] %>% html_table(dec= ",")
+  .[[1]] %>% html_table(dec=".")
 obrdzi <- c("Country/Territory", "Total(Year)")
 tabelaStarosti <- tabelaStarosti[ , obrdzi]
 names(tabelaStarosti) <- c("Drzava", "Povprecje.let")
