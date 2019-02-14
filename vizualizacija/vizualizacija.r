@@ -18,6 +18,16 @@ library(maptools)
 #zemljevid$OB_UIME <- factor(zemljevid$OB_UIME, levels=levels(obcine$obcina))
 #zemljevid <- fortify(zemljevid)
 
+source("lib/libraries.r", encoding="UTF-8")
+source("uvoz/uvoz.r", encoding="UTF-8")
 source('lib/uvozi.zemljevid.r')
 zemljevid <- uvozi.zemljevid("https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/110m/cultural/110m_cultural.zip",
                              "ne_110m_admin_0_countries", encoding="UTF-8") %>% fortify
+
+zdruzitev <- left_join(zemljevid, SkupnaTabela, by=("ADMIN"="Drzava"))
+
+lvls <- levels(zemljevid$ADMIN)
+unikat <- unique(SkupnaTabela$Drzava)
+
+neenakosti <- lvls != unikat
+test <- primerjava[neenakosti, ]
