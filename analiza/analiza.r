@@ -14,12 +14,13 @@ barve[indeksi_barv] = "red"
 ggplot(data =SkupnaTabela, aes(x=reorder(Drzava, -Vrednost.BDP), y=Vrednost.BDP)) +
   geom_bar(stat = "Identity") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=5)) +
-  coord_flip()
+  coord_flip() + ylab("BDP") + xlab("Država") + ggtitle("Vrednost BDP-ja v državah po svetu")
 
 ggplot(data=SkupnaTabela) + 
   geom_bar(aes(x=Drzava, y=Visina.place,fill=barve),stat = "Identity", show.legend = F)+
   coord_flip() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=7)) 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=7)) +
+  xlab("Višina plače") + ylab("Država") + ggtitle("Višina plače v državah po svetu")
 
 
 #Iskal povezave med grafi
