@@ -3,15 +3,23 @@ source("lib/libraries.r", encoding="UTF-8")
 source("uvoz/uvoz.r", encoding="UTF-8")
 
 #Samostojni grafi 
+SkupnaTabela$Drzava = factor(SkupnaTabela$Drzava,levels=SkupnaTabela %>% arrange(Visina.place) %>% .$Drzava,
+                             ordered = TRUE)
+
+pobarvane_drzave = c("Switzerland","Spain", "Japan")
+indeksi_barv=which(rev(levels(SkupnaTabela$Drzava))%in%pobarvane_drzave)
+barve = c(rep(NA,nrow(SkupnaTabela)))
+barve[indeksi_barv] = "red"
+
 ggplot(data =SkupnaTabela, aes(x=reorder(Drzava, -Vrednost.BDP), y=Vrednost.BDP)) +
   geom_bar(stat = "Identity") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=5)) +
   coord_flip()
 
-ggplot(data=SkupnaTabela, aes(x=Visina.place, y=reorder(Drzava, -Visina.place), fill=factor(ifelse(area="Switzerland", "Highlighted","Normal" )))) + 
-  geom_bar(stat = "Identity") + scale_fill_manual(name = "area", values = c("red", "grey50")) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=5)) +
-  coord_flip() 
+ggplot(data=SkupnaTabela) + 
+  geom_bar(aes(x=Drzava, y=Visina.place,fill=barve),stat = "Identity", show.legend = F)+
+  coord_flip() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=7)) 
 
 
 #Iskal povezave med grafi
