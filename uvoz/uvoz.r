@@ -80,16 +80,6 @@ uvoz.zivljenjski.stroski <- function(tabelaCostliving){
 }
 
 
-uvoz.placeBDP <- function(zdruzenaPlaceBDP){
-  zdruzenaPlaceBDP <- uvoz.place()  %>% inner_join(uvoz.BDP(), "Drzava"="Drzava")
-  return(zdruzenaPlaceBDP)
-}
-
-uvoz.placeBDPkriminal <- function(zdruzenaPlaceBDPCrimeindex){
-  zdruzenaPlaceBDPCrimeindex <- uvoz.placeBDP() %>% inner_join(uvoz.kriminal(), "Drzava"="Drzava")
-  return(zdruzenaPlaceBDPCrimeindex)
-}
-
 uvoz.skupna <- function(Skupnatabela){
   Skupnatabela <- uvoz.place() %>% inner_join(uvoz.BDP(), "Drzava"="Drzava") %>%
     inner_join(uvoz.starost(), "Drzava"="Drzava") %>%
@@ -99,8 +89,12 @@ uvoz.skupna <- function(Skupnatabela){
   return(Skupnatabela)
 }
 
-TabelaplaceBDPkriminal <- uvoz.placeBDPkriminal()
+TabelaIzobrazba <- uvoz.izobrazba()
+TabelaPlace <- uvoz.place()
+TabelaKriminal <- uvoz.kriminal()
+TabelaBDP <- uvoz.BDP()
 TabelaStarost <- uvoz.starost()
+TabelaZivljenjskiStroski <- uvoz.zivljenjski.stroski()
 SkupnaTabela <- uvoz.skupna()
 
 
