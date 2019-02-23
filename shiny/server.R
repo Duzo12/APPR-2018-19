@@ -3,7 +3,8 @@ library(reshape2)
 library(data.table)
 
 shinyServer(function(input, output) {
-  output$tabela <- DT::renderDataTable(DT::datatable(SkupnaTabela)) 
+  output$tabelaSkupna <- DT::renderDataTable(DT::datatable(SkupnaTabela))
+  
 
   
   #output$pokrajine <- renderUI(
