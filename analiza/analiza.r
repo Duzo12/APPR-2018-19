@@ -15,7 +15,7 @@ ggplot(data =SkupnaTabela) +
   geom_bar(aes(x= reorder(Drzava, Vrednost.BDP), y=Vrednost.BDP,fill=barve),stat = "Identity", show.legend = F)+
   coord_flip() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=7)) +
-  xlab("Država") + ylab("Višina BDP") + ggtitle("Višina plače v državah po svetu")
+  xlab("Država") + ylab("Vrednost BDP") + ggtitle("Vrednost BDP za države po svetu")
 
 ggplot(data=SkupnaTabela) + 
   geom_bar(aes(x=Drzava, y=Visina.place,fill=barve),stat = "Identity", show.legend = F)+
@@ -27,7 +27,7 @@ ggplot(data=SkupnaTabela) +
 
 ggplot(SkupnaTabela, aes(x = Visina.place, y = Vrednost.BDP)) +
   geom_point() +
-  geom_smooth(method = lm, se= F)
+  geom_smooth(method = loess)
 
 ggplot(SkupnaTabela, aes(x = Visina.place, y = Povprecje.let)) +
   geom_point() +
@@ -49,6 +49,6 @@ ggplot(SkupnaTabela, aes(x = Indeks.izobrazbe , y = Zivljenjski.stroski )) +
   geom_point() +
   geom_smooth(method =  loess)
 
-ggplot(SkupnaTabela, aes(x = Indeks.izobrazbe, y = Povprecje.let )) +
+ggplot(SkupnaTabela, aes(x = Povprecje.let, y = Indeks.izobrazbe )) +
   geom_point() +
   geom_smooth(method = loess)

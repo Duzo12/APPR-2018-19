@@ -7,6 +7,7 @@ output:
     includes:
       in_header: lib/styles.sty
     latex_engine: xelatex
+runtime: shiny
 ---
 
 ```{r setup, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
@@ -26,29 +27,39 @@ source("lib/rstudio.r", encoding="UTF-8")
 
 ##  Analiza neto plač po svetu
 
-Izbral sem si temo neto plač po svetu. V svoji nalogi bom analiziral kakšne so povprečne neto plače po svetu ter jih analiziral glede na več spremenljivk. Plače bom prav tako primerjal geografsko in jih povezal z BDP-jem te države. Prav tako se mi zdi zanimiva primerjava plače in kriminala. Na koncu pa bom plače primerjal tudi s starostno strukturo prebivalstva. 
+Pri predmetu Analiza podatkov s programom R sem si izbral temo,v kateri bom analiziral višino
+povprečne neto plače po svetu. V svoji nalogi bom višino neto plače primerjal z več spremenljivkami, ter tako skušal poiskati povezave med njimi. Tako bom plače primerjal z BDP-jem posamezne države. Poiskal bom tudi povprečno starost prebivalstva v posmezni državi in jo primerjal z višino neto plače. Prav tako pa bom iskal tudi povezave z izobrazbo, kriminalom in živjenjskimi stroški.
+  
 
 ## Podatkovni viri
 
 Viri:
   - podatki o povprečni mesečni plači:
-      https://www.numbeo.com/cost-of-living/prices_by_country.jsp?displayCurrency=USD&itemId=105   
+      https://www.numbeo.com/cost-of-living/prices_by_country.jsp?displayCurrency=USD&itemId=105 ,  
   - podatki o življenjskih stroških:
-      https://www.numbeo.com/cost-of-living/   
+      https://www.numbeo.com/cost-of-living/ ,  
   - podatki o številu kriminala:
-      https://www.numbeo.com/crime/rankings_by_country.jsp   
-      https://www.worldatlas.com/articles/murder-rates-by-country.html   
+      https://www.numbeo.com/crime/rankings_by_country.jsp ,  
+      https://www.worldatlas.com/articles/murder-rates-by-country.html  , 
   - podatki o povprečni starosti:
-      https://en.wikipedia.org/wiki/List_of_countries_by_median_age   
+      https://en.wikipedia.org/wiki/List_of_countries_by_median_age ,  
   - podatki o BDP-ju:
-      https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)_per_capita   
+      https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)_per_capita ,   
   - podatki o izobrazbi:
-      http://hdr.undp.org/en/data
+      http://hdr.undp.org/en/data.
       
 ## Zasnova podatkovnega dela
 
-Prvo bom poiskal povprečno plačo za posamezno države. Tako bodo v prvem stolpcu moje tabele naštete vse države, takoj za tem pa bo sledila višina povprečne plače. Prav tako bom poiskal podatke o BDP-ju, kriminalu in starosti prebivalstva, ter jih vključil v tabelo. Na koncu bom poiskal stroške življenja v posamezni državi, kjer bom stroške razdelil na več podskupin in jih tako primerjal s povprečno plačo.    
+Iz zgoraj naštetih spletnih strani, bom pobral tabele in jih nato združil v eno tabelo. Začel bom s tabelo mesečnih plač kateri bom nato pridružil še tabele BDP-ja, starosti, indeksi izobrazbe, kriminala in indeks življensjskih stroškov. ko bom dobil enotno tabelo, ki jo bom kasneje uporabljal za anačizo in iskanje povezav med podatki.
 
+## Hipoteze
+
+Hipoteza 1 : Višja kot bo plača, višji bo BDP,  
+Hipoteza 2 : Višja kot bo plača, manjša bo stopnja kriminala,  
+Hipoteza 3 : Plača bo naraščala skupaj s starostjo prebivalstva med 20- 30 letom, nato pa bo plača začela upadati,
+Hipoteza 4 : Izobrazba bo imela velik vpliv na zivljenjske stroške, saj bolj izobraženi ljudje odhajajo v bolj razvite države, kjer so stroški življenja višji.  
+
+Kasneje v nalogi bom analiziral hipoteze in jih s pomočjo grafov potrdil ali ovrgel.
 
 # Obdelava, uvoz in čiščenje podatkov
 
@@ -56,28 +67,34 @@ Prvo bom poiskal povprečno plačo za posamezno države. Tako bodo v prvem stolp
 source("uvoz/uvoz.r", encoding="UTF-8")
 ```
 
+Za čiščenje podatkov sem na začetku naloge uvozil 5 tabel in sicer:
+1. "TabelaPlace":
+ - Drzava - spremenljivka, ki pove za katero državo prikazujemo plačo
+ - Visina.place - spremenljivka, ki pove neto mesečno plačo v posamezni državi
 
-Uvozil sem nasljednje podatke:   
-  - povprečne neto mesečne podatke po svetu (HTML)   
-  - stopnjo kriminala po svetu (HTML)   
-  - indeks življenjskega stroška (HTML)   
-Pri vseh treh HTML datotekah sem naletel na težave pri branju podatkov, saj datoteke niso bile zapisane v navadni obliki, zato sem s pomočjo regularnih izrazov izluščil bistvo, ter nardil tabelo.   
-  - BDP per capita (HTML)   
-  - povprečna starost prebivalstva po svetu
-
-Podatki se nahajajo v treh tabelah:    
- 1.Prva tabela se imenuje Tabela1 in sestoji iz združenih tabel povprečne mesečne plače, BDP-ja in stopnje kriminala:   
- -'Država': ime države za katero sem poiskal nasljednje podatke   
- -'Višina plače v $': kakšna je povprečna mesečna plača v posamezni državi   
- -'BDP v $': koliko znaša BDP per capita v posamezni državi   
- -'Stopnja kriminala': koliko znaša indeks kriminala v posamezni državi
-
- 2. Druga tabela je tabela, ki predstavlja povprečno starost prebivalstva v posamezni državi:   
- -'Država': ime države za katero sem poiskal nasljednje podatke   
- -'Povprečje let': koliko znaša povprečna starost prebivalstva v neki državi
-
- 3. Tretja tabela je tabela, ki združuje vse tabele v eno
+2. "TabelaBDP":
+ - Drzava - spremenljivka,  ki pove za katero državo prikazujemo vrednost BDP v dolarjih
+ - Vreednost.BDP - spremenljivka, ki pove kakšen je BDP na prebivalca v posamezni državi
  
+3. "TabelaStarost":
+ - Drzava - spremenljivka,  ki pove za katero državo prikazujemo povprečno starost prebivalstva
+ - Povprecje.let - spremenljivka, ki pove kakšna je povprečna starost
+ 
+4. "TabelaIzobrazba":
+ - Drzava - spremenljivka,  ki pove za katero državo prikazujemo indeks izobrazbe
+ - Indeks.izobrazbe - spremenljivka, ki pove kakšen je indeks izobrazbe
+ 
+5. "Tabelakriminal":
+ - Drzava - spremenljivka,  ki pove za katero državo prikazujemo indeks kriminala
+ - Stopnja.kriminala - spremenljivka, ki pove kakšen je indeks kriminala
+ 
+6. "TabelaZivljenjskiStroski"
+ - Drzava - spremenljivka,  ki pove za katero državo prikazujemo stroške življenja v tej državi
+ - Zivljenjski.stroski- spremenljivka, ki prikazuje življenjske stroške v posamezni državi primerjane z stroški življenja v New Yorku. Indeks v New Yorku je tako 100: Države, ki imajo indeks višji od 100, to pomeni, da je življenje tam dražje kot v New Yorku.
+ 
+Vse te tabele sem uvozil v rstudio ter jih začel urejati. Ko sem uredil vse tabele, sem poskrbel, da sem jih združil v eno samo tabelo imenovano Skupna Tabela, ki je prikazan v shinyu. Pri združevanju sem uporabil inner_join, saj sem tako poskrbel, da sem imel za vsako državo vse ustrezne podatke, saj sem tako lažje analiziral in primerjal spremenljivke med seboj.
+
+
 
 ***
 
@@ -87,45 +104,60 @@ Podatki se nahajajo v treh tabelah:
 source("analiza/analiza.r", encoding="UTF-8")
 #source("vizualizacija/vizualizacija.r", encoding="UTF-8")
 ```
+V tem razdelku bom prikazal posamezne grafe, ki sem jih uporabljal pri analizi podatkov. Na koncu razdelka pa bom s pomočjo grafov vrednotil hipoteze.
 
-Spodnji graf prikazuje vrednost BDP-ja v posamezni državi
+Spodnja dva grafa prikazujeta višino plače in BDP posameznih držav. Obarval sem nekatere države, ki izstopajo od povprečja oziroma imajo ekstremne vrednosti.
+
 ```{r, echo=FALSE}
-ggplot(data =SkupnaTabela, aes(x=reorder(Drzava, -Vrednost.BDP), y=Vrednost.BDP)) +
-  geom_bar(stat = "Identity") +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=5)) +
-  coord_flip()
+ggplot(data =SkupnaTabela) +
+  geom_bar(aes(x= reorder(Drzava, Vrednost.BDP), y=Vrednost.BDP,fill=barve),stat = "Identity", show.legend = F)+
+  coord_flip() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=7)) +
+  xlab("Država") + ylab("Vrednost BDP") + ggtitle("Vrednost BDP za države po svetu")
 ```
 
-Spodnji graf prikazuje višino plače v posamezni državi
 ```{r, echo=FALSE}
-ggplot(data=SkupnaTabela, aes(x=reorder(Drzava, -Visina.place), y=Visina.place)) + 
-  geom_bar(stat = "Identity") +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=5)) +
-  coord_flip()
+ggplot(data=SkupnaTabela) + 
+  geom_bar(aes(x=Drzava, y=Visina.place,fill=barve),stat = "Identity", show.legend = F)+
+  coord_flip() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=7)) +
+  xlab("Država") + ylab("Višina plače") + ggtitle("Višina plače v državah po svetu")
 ```
+Če primerjamo oz. na hitro pogledamo kje se nahajajo obarvane države, lahko hitro vidimo, da se države nahajajo na podobnih mestih, zato lahko sklepamo, da je BDP odvisen od višine plače in obratno.
 
-Sedaj pa bom prikazal povezave med različnimi spremenljivkami v moji nalogi:
+Sedaj pa bom analiziral hipoteze s pomočjo grafov in tako prikazal povezave med spremenljivkami.
 
-i)Višina plače in vrednost BDP
-```{r, echo=FALSE}
+Hipoteza 1 : Višja kot bo plača, višji bo BDP:
+```{r}
 ggplot(SkupnaTabela, aes(x = Visina.place, y = Vrednost.BDP)) +
   geom_point() +
-  geom_smooth(method = lm)
+  geom_smooth(method = loess) + xlab("Višina plače") + ylab("BDP") + ggtitle("Povezava med višino plače in vrenostjo BDP")
 ```
+Vidimo lahko, da z rastjo plače raste tudi vrednost BDP, zato lahko predpostavimo, da imajo države z višjimi plačami tudi višji BDP. Hipoteza je bila pravilna
 
-ii)Višina plače in indeks izobrazbe
-```{r, echo=FALSE}
-ggplot(SkupnaTabela, aes(x = Visina.place, y = Indeks.izobrazbe)) +
-  geom_point() +
-  geom_smooth(method =  lm)
-```
-
-iii)Višina plače in indeks kriminala
-```{r, echo=FALSE}
+Hipoteza 2 : Večja kot bo plača, manjša bo stopnja kriminala:
+```{r}
 ggplot(SkupnaTabela, aes(x = Visina.place, y = Stopnja.kriminala)) +
   geom_point() +
-  geom_smooth(method =  lm)
+  geom_smooth(method =  loess) + xlab("Višina plače") + ylab("Stopnja kriminala") + ggtitle("Povezava med višino plače in stopnjo kriminala")
 ```
+Tu pa lahko vidimo, da višja kot je plača manj je kriminala, zato je bila hipoteza pravilna.
+
+Hipoteza 3 : Plača bo naraščala skupaj s starostjo prebivalstva med 20- 30 letom, nato pa bo plača začela upadati.
+```{r}
+ggplot(SkupnaTabela, aes(x = Povprecje.let , y = Visina.place)) +
+  geom_point() +
+  geom_smooth(method = loess) + xlab("Starost") + ylab("Višina plače") + ggtitle("Povezava med višino plače in starostjo prebivalstva")
+```
+Z grafa lahko vidimi, da plača narašča od 25-38 leta, nato pa začne počasi upadati. Hipoteza je bila deloma pravilna.
+
+Hipoteza 4 : Izobrazba bo imela velik vpliv na zivljenjske stroške, saj bolj izobraženi ljudje odhajajo v bolj razvite države, kjer so stroški življenja višji.
+```{r}
+ggplot(SkupnaTabela, aes(x = Indeks.izobrazbe , y = Zivljenjski.stroski )) +
+  geom_point() +
+  geom_smooth(method =  loess) + xlab("Indeks izobrazbe") + ylab("Življenjski stroški") + ggtitle("Povezava med izobrazbo in življenjskimi stroški")
+```
+Vidimo lahko, da ima indeks izobrazbe zelo majhen vpliv na življenjske stroške vse dokler je indeks manjši od 80, nato pa vidimo hitri dvig življenjskih stroškov. Hipoteza je bila pravilna.
 
 
 ***
