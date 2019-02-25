@@ -101,14 +101,20 @@ Vse te tabele sem uvozil v rstudio ter jih začel urejati. Ko sem uredil vse tab
 # Analiza in vizualizacija podatkov
 
 ```{r vizualizacija, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
-source("analiza/analiza.r", encoding="UTF-8")
-#source("vizualizacija/vizualizacija.r", encoding="UTF-8")
 ```
 V tem razdelku bom prikazal posamezne grafe, ki sem jih uporabljal pri analizi podatkov. Na koncu razdelka pa bom s pomočjo grafov vrednotil hipoteze.
 
 Spodnja dva grafa prikazujeta višino plače in BDP posameznih držav. Obarval sem nekatere države, ki izstopajo od povprečja oziroma imajo ekstremne vrednosti.
 
 ```{r, echo=FALSE}
+SkupnaTabela$Drzava <- factor(SkupnaTabela$Drzava,levels=SkupnaTabela %>% arrange(Visina.place) %>% .$Drzava,
+                             ordered = TRUE)
+
+pobarvane_drzave = c("Switzerland","Slovenia", "Egypt")
+indeksi_barv=which(rev(levels(SkupnaTabela$Drzava))%in%pobarvane_drzave)
+barve = c(rep(NA,nrow(SkupnaTabela)))
+barve[indeksi_barv] = "red"
+
 ggplot(data =SkupnaTabela) +
   geom_bar(aes(x= reorder(Drzava, Vrednost.BDP), y=Vrednost.BDP,fill=barve),stat = "Identity", show.legend = F)+
   coord_flip() +
@@ -160,6 +166,12 @@ ggplot(SkupnaTabela, aes(x = Indeks.izobrazbe , y = Zivljenjski.stroski )) +
 Vidimo lahko, da ima indeks izobrazbe zelo majhen vpliv na življenjske stroške vse dokler je indeks manjši od 80, nato pa vidimo hitri dvig življenjskih stroškov. Hipoteza je bila pravilna.
 
 
+Sedaj pa si poglejmo še kakšna je povprečna starost prebivalstva v posamezni državi skozi zemljevid.
+```{r}
+source("vizualizacija/vizualizacija.r", encoding="UTF-8")
+slikazemljevid
+```
+Z zemljevida lahko vidimo, da je v Afriki veliko število držav, katerih povprečna starost prebivalstva sega okoli 20 let. Na drugi strani pa lahko tudi opazimo, da so severnejše države starejše od južnih.
 ***
 
 # Napredna analiza podatkov
