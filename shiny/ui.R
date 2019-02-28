@@ -1,7 +1,7 @@
 library(shiny)
 
 shinyUI(fluidPage(
-  titlePanel("Analiza neto plač po svetu"),
+  titlePanel(""),
   
     tags$table(tags$h3("Skupna tabela"),
              DT::dataTableOutput("tabelaSkupna")),
@@ -10,10 +10,6 @@ shinyUI(fluidPage(
   
     plotOutput("grafplace")
 
-    #,  tabPanel("Število naselij",
-               #sidebarPanel(
-                  #uiOutput("pokrajine")
-                #),
-               #mainPanel(plotOutput("naselja")))
+  
     )
 )

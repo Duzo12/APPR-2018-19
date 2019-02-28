@@ -33,20 +33,20 @@ povprečne neto plače po svetu. V svoji nalogi bom višino neto plače primerja
 
 ## Podatkovni viri
 
-Viri:
-  - podatki o povprečni mesečni plači:
-      https://www.numbeo.com/cost-of-living/prices_by_country.jsp?displayCurrency=USD&itemId=105 ,  
-  - podatki o življenjskih stroških:
-      https://www.numbeo.com/cost-of-living/ ,  
-  - podatki o številu kriminala:
-      https://www.numbeo.com/crime/rankings_by_country.jsp ,  
-      https://www.worldatlas.com/articles/murder-rates-by-country.html  , 
-  - podatki o povprečni starosti:
-      https://en.wikipedia.org/wiki/List_of_countries_by_median_age ,  
-  - podatki o BDP-ju:
-      https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)_per_capita ,   
-  - podatki o izobrazbi:
-      http://hdr.undp.org/en/data.
+Viri:      
+  - podatki o povprečni mesečni plači:      
+      https://www.numbeo.com/cost-of-living/prices_by_country.jsp?displayCurrency=USD&itemId=105,     
+  - podatki o življenjskih stroških:  
+      https://www.numbeo.com/cost-of-living/,     
+  - podatki o številu kriminala:  
+      https://www.numbeo.com/crime/rankings_by_country.jsp,     
+      https://www.worldatlas.com/articles/murder-rates-by-country.html,     
+  - podatki o povprečni starosti:    
+      https://en.wikipedia.org/wiki/List_of_countries_by_median_age,       
+  - podatki o BDP-ju:    
+      https://en.wikipedia.org/wiki/List_of_countries_by_GDP_(PPP)_per_capita,       
+  - podatki o izobrazbi:    
+      http://hdr.undp.org/en/data.    
       
 ## Zasnova podatkovnega dela
 
@@ -106,7 +106,7 @@ V tem razdelku bom prikazal posamezne grafe, ki sem jih uporabljal pri analizi p
 
 Spodnja dva grafa prikazujeta višino plače in BDP posameznih držav. Obarval sem nekatere države, ki izstopajo od povprečja oziroma imajo ekstremne vrednosti.
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 SkupnaTabela$Drzava <- factor(SkupnaTabela$Drzava,levels=SkupnaTabela %>% arrange(Visina.place) %>% .$Drzava,
                              ordered = TRUE)
 
@@ -133,46 +133,51 @@ ggplot(data=SkupnaTabela) +
 
 Sedaj pa bom analiziral hipoteze s pomočjo grafov in tako prikazal povezave med spremenljivkami.
 
-Hipoteza 1 : Višja kot bo plača, višji bo BDP:
-```{r}
+### Hipoteza 1 : Višja kot bo plača, višji bo BDP:
+```{r,echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(SkupnaTabela, aes(x = Visina.place, y = Vrednost.BDP)) +
   geom_point() +
   geom_smooth(method = loess) + xlab("Višina plače") + ylab("BDP") + ggtitle("Povezava med višino plače in vrenostjo BDP")
 ```
+
 Vidimo lahko, da z rastjo plače raste tudi vrednost BDP, zato lahko predpostavimo, da imajo države z višjimi plačami tudi višji BDP. Hipoteza je bila pravilna
 
-Hipoteza 2 : Večja kot bo plača, manjša bo stopnja kriminala:
-```{r}
+### Hipoteza 2 : Večja kot bo plača, manjša bo stopnja kriminala:
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(SkupnaTabela, aes(x = Visina.place, y = Stopnja.kriminala)) +
   geom_point() +
   geom_smooth(method =  loess) + xlab("Višina plače") + ylab("Stopnja kriminala") + ggtitle("Povezava med višino plače in stopnjo kriminala")
 ```
+
 Tu pa lahko vidimo, da višja kot je plača manj je kriminala, zato je bila hipoteza pravilna.
 
-Hipoteza 3 : Plača bo naraščala skupaj s starostjo prebivalstva med 20- 30 letom, nato pa bo plača začela upadati.
-```{r}
+### Hipoteza 3 : Plača bo naraščala skupaj s starostjo prebivalstva med 20- 30 letom, nato pa bo plača začela upadati.
+```{r,echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(SkupnaTabela, aes(x = Povprecje.let , y = Visina.place)) +
   geom_point() +
   geom_smooth(method = loess) + xlab("Starost") + ylab("Višina plače") + ggtitle("Povezava med višino plače in starostjo prebivalstva")
 ```
+
 Z grafa lahko vidimi, da plača narašča od 25-38 leta, nato pa začne počasi upadati. Hipoteza je bila deloma pravilna.
 
-Hipoteza 4 : Izobrazba bo imela velik vpliv na zivljenjske stroške, saj bolj izobraženi ljudje odhajajo v bolj razvite države, kjer so stroški življenja višji.
-```{r}
+### Hipoteza 4 : Izobrazba bo imela velik vpliv na zivljenjske stroške, saj bolj izobraženi ljudje odhajajo v bolj razvite države, kjer so stroški življenja višji.
+```{r,echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(SkupnaTabela, aes(x = Indeks.izobrazbe , y = Zivljenjski.stroski )) +
   geom_point() +
   geom_smooth(method =  loess) + xlab("Indeks izobrazbe") + ylab("Življenjski stroški") + ggtitle("Povezava med izobrazbo in življenjskimi stroški")
 ```
+
 Vidimo lahko, da ima indeks izobrazbe zelo majhen vpliv na življenjske stroške vse dokler je indeks manjši od 80, nato pa vidimo hitri dvig življenjskih stroškov. Hipoteza je bila pravilna.
 
 
-Sedaj pa si poglejmo še kakšna je povprečna starost prebivalstva v posamezni državi skozi zemljevid.
-```{r}
+Sedaj pa si poglejmo še kakšna je povprečna starost prebivalstva v posamezni državi skozi zemljevid.  
+```{r,echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 source("vizualizacija/vizualizacija.r", encoding="UTF-8")
 slikazemljevid
 ```
-Z zemljevida lahko vidimo, da je v Afriki veliko število držav, katerih povprečna starost prebivalstva sega okoli 20 let. Na drugi strani pa lahko tudi opazimo, da so severnejše države starejše od južnih.
-***
+
+Z zemljevida lahko vidimo, da je v Afriki veliko število držav, katerih povprečna starost prebivalstva sega okoli 20 let. Na drugi strani pa lahko tudi opazimo, da so severnejše države starejše od južnih. 
+
 
 # Napredna analiza podatkov
 
@@ -180,10 +185,14 @@ Z zemljevida lahko vidimo, da je v Afriki veliko število držav, katerih povpre
 #source("analiza/analiza.r", encoding="UTF-8")
 ```
 
-Spodnji graf prikazuje povezavo med številom naselij in površino občine.
+# Za zaključek pa sem izdelal še shiny.
 
-```{r graf, echo=FALSE, fig.align='center', fig.cap='Povezava med številom naselij in površino občine'}
+```{r shiny, echo = FALSE, warning=FALSE}
+shinyAppDir("shiny", options=list(width="100%", height=600))
 
 ```
+
+
+
 
 

@@ -8,16 +8,6 @@ library(maptools)
 
 
 
-
-
-
-#zemljevid <- uvozi.zemljevid("http://baza.fmf.uni-lj.si/OB.zip", "OB",
-                             #pot.zemljevida="OB", encoding="Windows-1250")
-#levels(zemljevid$OB_UIME) <- levels(zemljevid$OB_UIME) %>%
-  #{ gsub("Slovenskih", "Slov.", .) } %>% { gsub("-", " - ", .) }
-#zemljevid$OB_UIME <- factor(zemljevid$OB_UIME, levels=levels(obcine$obcina))
-#zemljevid <- fortify(zemljevid)
-
 source("lib/libraries.r", encoding="UTF-8")
 source("uvoz/uvoz.r", encoding="UTF-8")
 source('lib/uvozi.zemljevid.r')
@@ -40,7 +30,8 @@ zemljevid$ADMIN <- as.character(zemljevid$ADMIN)
 zdruzitev <- left_join(zemljevid, TabelaStarost, by=c("ADMIN"="Drzava"))
 
 slikazemljevid <- ggplot(zdruzitev) + 
-  geom_polygon(aes(x = long, y = lat, group = group, fill = Povprecje.let ))
+  geom_polygon(aes(x = long, y = lat, group = group, fill = Povprecje.let )) + xlab("") + ylab("") + ggtitle("Starost prebivalstva")
+slikazemljevid <- slikazemljevid + guides(fill=guide_legend(title="Starost(leta)"))
 slikazemljevid
 
 
