@@ -187,6 +187,7 @@ Z zemljevida lahko vidimo, da je v Afriki veliko število držav, katerih povpre
 
 # Za zaključek pa sem izdelal še shiny.
 
+Pri Skupni tabeli sem s shinyem oblikoval tabelo pri kateri lahko izbiramo vrednosti, ki nam jih bo tabela prikazovala.
 ```{r shiny, echo = FALSE, warning=FALSE}
 shinyAppDir("shiny", options=list(width="100%", height=600))
 
