@@ -1,16 +1,6 @@
 # 3. faza: Vizualizacija podatkov
 
 # Uvozimo zemljevid.
-library(rgdal)
-library(rgeos)
-library(mosaic)
-library(maptools)
-
-
-
-source("lib/libraries.r", encoding="UTF-8")
-source("uvoz/uvoz.r", encoding="UTF-8")
-source('lib/uvozi.zemljevid.r')
 zemljevid <- uvozi.zemljevid("https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/110m/cultural/110m_cultural.zip",
                              "ne_110m_admin_0_countries", encoding="UTF-8") %>% fortify
 

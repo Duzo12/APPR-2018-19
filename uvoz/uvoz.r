@@ -1,7 +1,5 @@
 # 2. faza: Uvoz podatkov
 
-source("lib/libraries.r", encoding="UTF-8")
-
 #Funkcija, ki uvozi exel tabelo
 uvoz.izobrazba <- function(tabelaIzobrazba){
   tabelaIzobrazba <- read_xlsx("podatki/Izobrazba.xlsx")

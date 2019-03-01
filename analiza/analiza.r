@@ -1,6 +1,4 @@
 # 4. faza: Analiza podatkov
-source("lib/libraries.r", encoding="UTF-8")
-source("uvoz/uvoz.r", encoding="UTF-8")
 
 #Samostojni grafi 
 SkupnaTabela$Drzava <- factor(SkupnaTabela$Drzava,levels=SkupnaTabela %>% arrange(Visina.place) %>% .$Drzava,

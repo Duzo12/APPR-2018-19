@@ -1,30 +1,23 @@
 library(shiny)
 
-shinyUI(fluidPage(
-  title = " ",
+shinyUI(fluidPage( 
+  title = " ", 
   
-  sidebarLayout(
-    sidebarPanel(
-      conditionalPanel(
-        'input.dataset === "SkupnaTabela"',
-        checkboxGroupInput("show_vars", "Kateri stolpec naj prikaže:",
-                           names(SkupnaTabela), selected = names(SkupnaTabela))
-      )#,
-      #conditionalPanel(
-        #'input.dataset === "TabelaPlace"',
-        #checkboxGroupInput("show_vars", "Za katero državo naj prikaže stolpec plače:",
-                           #names(TabelaPlace), selected = names(TabelaPlace)))
+  sidebarLayout( 
+    sidebarPanel( 
+      uiOutput("izbor_stolpcev"), 
+      uiOutput("izbor_drzav") 
+      ), 
+    mainPanel( 
+      tabsetPanel( 
+        id = 'dataset', 
+        tabPanel(value="tab_skupna",title = "Skupna", DT::dataTableOutput("tabelaSkupna")), 
+        tabPanel(value="tab_place",title = "Plače", 
+                 plotOutput("grafplace",height = 700), 
+                 DT::dataTableOutput("tabelaPlace") 
+                 ) 
+        ) 
       
-    ),
-    mainPanel(
-      tabsetPanel(
-        id = 'dataset',
-        tabPanel(" ", DT::dataTableOutput("SkupnaTabela"))#,
-        #abPanel(plotOutput("grafplace"))))
-  )
-  
-)
-  
-  
-    )))
+      
+      ))))
 
