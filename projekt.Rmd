@@ -56,7 +56,7 @@ Iz zgoraj naštetih spletnih strani, bom pobral tabele in jih nato združil v en
 
 Hipoteza 1 : Višja kot bo plača, višji bo BDP,  
 Hipoteza 2 : Višja kot bo plača, manjša bo stopnja kriminala,  
-Hipoteza 3 : Plača bo naraščala skupaj s starostjo prebivalstva med 20- 30 letom, nato pa bo plača začela upadati,
+Hipoteza 3 : Plača bo naraščala skupaj s starostjo prebivalstva med 20- 30 letom, nato pa bo plača začela upadati,    
 Hipoteza 4 : Izobrazba bo imela velik vpliv na zivljenjske stroške, saj bolj izobraženi ljudje odhajajo v bolj razvite države, kjer so stroški življenja višji.  
 
 Kasneje v nalogi bom analiziral hipoteze in jih s pomočjo grafov potrdil ali ovrgel.
@@ -129,6 +129,7 @@ ggplot(data=SkupnaTabela) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=7)) +
   xlab("Država") + ylab("Višina plače") + ggtitle("Višina plače v državah po svetu")
 ```
+
 Če primerjamo oz. na hitro pogledamo kje se nahajajo obarvane države, lahko hitro vidimo, da se države nahajajo na podobnih mestih, zato lahko sklepamo, da je BDP odvisen od višine plače in obratno.
 
 Sedaj pa bom analiziral hipoteze s pomočjo grafov in tako prikazal povezave med spremenljivkami.
