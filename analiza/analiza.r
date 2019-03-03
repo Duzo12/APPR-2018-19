@@ -9,13 +9,14 @@ indeksi_barv=which(rev(levels(SkupnaTabela$Drzava))%in%pobarvane_drzave)
 barve = c(rep(NA,nrow(SkupnaTabela)))
 barve[indeksi_barv] = "red"
 
-ggplot(data =SkupnaTabela) +
+
+grafBDP <- ggplot(data =SkupnaTabela) +
   geom_bar(aes(x= reorder(Drzava, Vrednost.BDP), y=Vrednost.BDP,fill=barve),stat = "Identity", show.legend = F)+
   coord_flip() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=7)) +
   xlab("Država") + ylab("Vrednost BDP") + ggtitle("Vrednost BDP za države po svetu")
 
-ggplot(data=SkupnaTabela) + 
+grafPlace <-ggplot(data=SkupnaTabela) + 
   geom_bar(aes(x=Drzava, y=Visina.place,fill=barve),stat = "Identity", show.legend = F)+
   coord_flip() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=7)) +
@@ -23,30 +24,37 @@ ggplot(data=SkupnaTabela) +
 
 #Iskal povezave med grafi
 
-ggplot(SkupnaTabela, aes(x = Visina.place, y = Vrednost.BDP)) +
+grafPlaceBDP <- ggplot(SkupnaTabela, aes(x = Visina.place, y = Vrednost.BDP)) +
   geom_point() +
-  geom_smooth(method = loess)
+  geom_smooth(method = loess) +
+  xlab("Višina plače") + ylab("Vrednost BDP")
 
-ggplot(SkupnaTabela, aes(x = Visina.place, y = Povprecje.let)) +
+grafStarostPlace <- ggplot(SkupnaTabela, aes(x = Povprecje.let, y = Visina.place)) +
   geom_point() +
-  geom_smooth(method = loess)
+  geom_smooth(method = loess) +
+  xlab("Starost") + ylab("Višina plače")
 
-ggplot(SkupnaTabela, aes(x = Visina.place, y = Indeks.izobrazbe)) +
+grafPlaceIzobrazba <- ggplot(SkupnaTabela, aes(x = Visina.place, y = Indeks.izobrazbe)) +
   geom_point() +
-  geom_smooth(method =  loess)
+  geom_smooth(method =  loess) +
+  xlab("višina plače") + ylab("Indeks izobrazbe") 
 
-ggplot(SkupnaTabela, aes(x = Visina.place, y = Stopnja.kriminala)) +
+grafPlaceKriminal <- ggplot(SkupnaTabela, aes(x = Visina.place, y = Stopnja.kriminala)) +
   geom_point() +
-  geom_smooth(method =  loess)
+  geom_smooth(method =  loess) + 
+  xlab("Višina plače") + ylab("Stopnja kriminala") 
 
-ggplot(SkupnaTabela, aes(x = Visina.place, y = Zivljenjski.stroski)) +
+grafPlaceZivljenjskistroski <- ggplot(SkupnaTabela, aes(x = Visina.place, y = Zivljenjski.stroski)) +
   geom_point() +
-  geom_smooth(method =  loess)
+  geom_smooth(method =  loess)  +
+  xlab("Višina plače") + ylab("Indeks življenjskih stroškov") 
 
-ggplot(SkupnaTabela, aes(x = Indeks.izobrazbe , y = Zivljenjski.stroski )) +
+grafIzobrazbaZivljenjskistroski <- ggplot(SkupnaTabela, aes(x = Indeks.izobrazbe , y = Zivljenjski.stroski )) +
   geom_point() +
-  geom_smooth(method =  loess)
+  geom_smooth(method =  loess) +
+  xlab("Indeks izobrazbe") + ylab("Indeks življenjskih stroškov") 
 
-ggplot(SkupnaTabela, aes(x = Povprecje.let, y = Indeks.izobrazbe )) +
+grafStarostIzobrazba <- ggplot(SkupnaTabela, aes(x = Povprecje.let, y = Indeks.izobrazbe )) +
   geom_point() +
-  geom_smooth(method = loess)
+  geom_smooth(method = loess) + 
+  xlab("Starost") + ylab("Indeks izobrazbe") 

@@ -28,7 +28,7 @@ source("lib/rstudio.r", encoding="UTF-8")
 ##  Analiza neto plač po svetu
 
 Pri predmetu Analiza podatkov s programom R sem si izbral temo,v kateri bom analiziral višino
-povprečne neto plače po svetu. V svoji nalogi bom višino neto plače primerjal z več spremenljivkami, ter tako skušal poiskati povezave med njimi. Tako bom plače primerjal z BDP-jem posamezne države. Poiskal bom tudi povprečno starost prebivalstva v posmezni državi in jo primerjal z višino neto plače. Prav tako pa bom iskal tudi povezave z izobrazbo, kriminalom in živjenjskimi stroški.
+povprečne neto plače po svetu. V svoji nalogi bom višino neto plače primerjal z več spremenljivkami, ter tako skušal poiskati povezave med njimi. Tako bom plače primerjal z BDP-jem posamezne države. Poiskal bom tudi povprečno starost prebivalstva v posmezni državi in jo primerjal z višino neto plače. Prav tako pa bom iskal tudi povezave z izobrazbo, kriminalom in živjenjskimi stroški.Vsi podatki v nalogi pa veljajo za leto 2017.
   
 
 ## Podatkovni viri
@@ -50,7 +50,7 @@ Viri:
       
 ## Zasnova podatkovnega dela
 
-Iz zgoraj naštetih spletnih strani, bom pobral tabele in jih nato združil v eno tabelo. Začel bom s tabelo mesečnih plač kateri bom nato pridružil še tabele BDP-ja, starosti, indeksi izobrazbe, kriminala in indeks življensjskih stroškov. ko bom dobil enotno tabelo, ki jo bom kasneje uporabljal za anačizo in iskanje povezav med podatki.
+Iz zgoraj naštetih spletnih strani, bom pobral tabele in jih nato združil v eno tabelo. Začel bom s tabelo mesečnih plač kateri bom nato pridružil še tabele BDP-ja, starosti, indeksi izobrazbe, kriminala in indeks življensjskih stroškov. Tako bom dobil enotno tabelo, ki jo bom kasneje uporabljal za analizo in iskanje povezav med podatki.
 
 ## Hipoteze
 
@@ -67,7 +67,8 @@ Kasneje v nalogi bom analiziral hipoteze in jih s pomočjo grafov potrdil ali ov
 source("uvoz/uvoz.r", encoding="UTF-8")
 ```
 
-Za čiščenje podatkov sem na začetku naloge uvozil 5 tabel in sicer:
+Za čiščenje podatkov sem na začetku naloge uvozil 5 tabel in sicer:  
+
 1. "TabelaPlace":
  - Drzava - spremenljivka, ki pove za katero državo prikazujemo plačo
  - Visina.place - spremenljivka, ki pove neto mesečno plačo v posamezni državi
@@ -100,13 +101,13 @@ Vse te tabele sem uvozil v rstudio ter jih začel urejati. Ko sem uredil vse tab
 
 # Analiza in vizualizacija podatkov
 
-```{r vizualizacija, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
-```
 V tem razdelku bom prikazal posamezne grafe, ki sem jih uporabljal pri analizi podatkov. Na koncu razdelka pa bom s pomočjo grafov vrednotil hipoteze.
 
 Spodnja dva grafa prikazujeta višino plače in BDP posameznih držav. Obarval sem nekatere države, ki izstopajo od povprečja oziroma imajo ekstremne vrednosti.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
+source("analiza/analiza.r", encoding="UTF-8")
+
 SkupnaTabela$Drzava <- factor(SkupnaTabela$Drzava,levels=SkupnaTabela %>% arrange(Visina.place) %>% .$Drzava,
                              ordered = TRUE)
 
@@ -115,19 +116,14 @@ indeksi_barv=which(rev(levels(SkupnaTabela$Drzava))%in%pobarvane_drzave)
 barve = c(rep(NA,nrow(SkupnaTabela)))
 barve[indeksi_barv] = "red"
 
-ggplot(data =SkupnaTabela) +
-  geom_bar(aes(x= reorder(Drzava, Vrednost.BDP), y=Vrednost.BDP,fill=barve),stat = "Identity", show.legend = F)+
-  coord_flip() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=7)) +
-  xlab("Država") + ylab("Vrednost BDP") + ggtitle("Vrednost BDP za države po svetu")
+
+print(grafBDP)
 ```
 
 ```{r, echo=FALSE}
-ggplot(data=SkupnaTabela) + 
-  geom_bar(aes(x=Drzava, y=Visina.place,fill=barve),stat = "Identity", show.legend = F)+
-  coord_flip() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1),text = element_text(size=7)) +
-  xlab("Država") + ylab("Višina plače") + ggtitle("Višina plače v državah po svetu")
+source("analiza/analiza.r", encoding="UTF-8")
+
+print(grafPlace)
 ```
 
 Če primerjamo oz. na hitro pogledamo kje se nahajajo obarvane države, lahko hitro vidimo, da se države nahajajo na podobnih mestih, zato lahko sklepamo, da je BDP odvisen od višine plače in obratno.
@@ -136,36 +132,36 @@ Sedaj pa bom analiziral hipoteze s pomočjo grafov in tako prikazal povezave med
 
 ### Hipoteza 1 : Višja kot bo plača, višji bo BDP:
 ```{r,echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(SkupnaTabela, aes(x = Visina.place, y = Vrednost.BDP)) +
-  geom_point() +
-  geom_smooth(method = loess) + xlab("Višina plače") + ylab("BDP") + ggtitle("Povezava med višino plače in vrenostjo BDP")
+source("analiza/analiza.r", encoding="UTF-8")
+
+print(grafPlaceBDP)
 ```
 
 Vidimo lahko, da z rastjo plače raste tudi vrednost BDP, zato lahko predpostavimo, da imajo države z višjimi plačami tudi višji BDP. Hipoteza je bila pravilna
 
 ### Hipoteza 2 : Večja kot bo plača, manjša bo stopnja kriminala:
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(SkupnaTabela, aes(x = Visina.place, y = Stopnja.kriminala)) +
-  geom_point() +
-  geom_smooth(method =  loess) + xlab("Višina plače") + ylab("Stopnja kriminala") + ggtitle("Povezava med višino plače in stopnjo kriminala")
+source("analiza/analiza.r", encoding="UTF-8")
+
+print(grafPlaceKriminal)
 ```
 
 Tu pa lahko vidimo, da višja kot je plača manj je kriminala, zato je bila hipoteza pravilna.
 
 ### Hipoteza 3 : Plača bo naraščala skupaj s starostjo prebivalstva med 20- 30 letom, nato pa bo plača začela upadati.
 ```{r,echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(SkupnaTabela, aes(x = Povprecje.let , y = Visina.place)) +
-  geom_point() +
-  geom_smooth(method = loess) + xlab("Starost") + ylab("Višina plače") + ggtitle("Povezava med višino plače in starostjo prebivalstva")
+source("analiza/analiza.r", encoding="UTF-8")
+
+print(grafStarostPlace)
 ```
 
 Z grafa lahko vidimi, da plača narašča od 25-38 leta, nato pa začne počasi upadati. Hipoteza je bila deloma pravilna.
 
 ### Hipoteza 4 : Izobrazba bo imela velik vpliv na zivljenjske stroške, saj bolj izobraženi ljudje odhajajo v bolj razvite države, kjer so stroški življenja višji.
 ```{r,echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(SkupnaTabela, aes(x = Indeks.izobrazbe , y = Zivljenjski.stroski )) +
-  geom_point() +
-  geom_smooth(method =  loess) + xlab("Indeks izobrazbe") + ylab("Življenjski stroški") + ggtitle("Povezava med izobrazbo in življenjskimi stroški")
+source("analiza/analiza.r", encoding="UTF-8")
+
+print(grafIzobrazbaZivljenjskistroski)
 ```
 
 Vidimo lahko, da ima indeks izobrazbe zelo majhen vpliv na življenjske stroške vse dokler je indeks manjši od 80, nato pa vidimo hitri dvig življenjskih stroškov. Hipoteza je bila pravilna.
@@ -174,26 +170,24 @@ Vidimo lahko, da ima indeks izobrazbe zelo majhen vpliv na življenjske stroške
 Sedaj pa si poglejmo še kakšna je povprečna starost prebivalstva v posamezni državi skozi zemljevid.  
 ```{r,echo=FALSE, results='hide', message=FALSE, warning=FALSE}
 source("vizualizacija/vizualizacija.r", encoding="UTF-8")
+
 slikazemljevid
 ```
 
 Z zemljevida lahko vidimo, da je v Afriki veliko število držav, katerih povprečna starost prebivalstva sega okoli 20 let. Na drugi strani pa lahko tudi opazimo, da so severnejše države starejše od južnih. 
 
 
-# Napredna analiza podatkov
+# Shiny
 
-```{r analiza, echo=FALSE, message=FALSE}
-#source("analiza/analiza.r", encoding="UTF-8")
-```
+Pri Skupni tabeli sem s shinyem oblikoval tabeli pri kateri lahko izbiramo vrednosti, ki nam jih bo tabela prikazovala.
 
-# Za zaključek pa sem izdelal še shiny.
-
-Pri Skupni tabeli sem s shinyem oblikoval tabelo pri kateri lahko izbiramo vrednosti, ki nam jih bo tabela prikazovala.
 ```{r shiny, echo = FALSE, warning=FALSE}
 shinyAppDir("shiny", options=list(width="100%", height=600))
 
 ```
 
+# Zaključek
+Pri izdelavi projekta sem užival in se naučil veliko novih uporabnih metod za obdelavo podatkov. Prav tako pa sem poleg tega pridobil tudi znanja o temi, ki sem si jo pri projektu izbral.
 
 
 
